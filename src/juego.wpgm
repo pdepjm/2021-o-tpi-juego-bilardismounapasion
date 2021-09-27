@@ -7,7 +7,7 @@ program juego {
 	game.height(20)
 	game.width(30)
 	game.title("Pdep-Jitsu")
-	game.ground("Fondo.png")
+	game.boardGround("Fondo.png")
 	partida.iniciar()
 	game.start()
 }

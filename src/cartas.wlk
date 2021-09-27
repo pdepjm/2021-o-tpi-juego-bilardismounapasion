@@ -22,14 +22,14 @@ class Carta{
 	}
 	
 	method posicionEnMazo(){
-		if (nroCarta == 1) {return game.at(3,3)}
-		else if(nroCarta == 2) {return game.at(8,3)}
-		else {return game.at(13,3)}
+		if (nroCarta == 1) {return game.at(2,1)}
+		else if(nroCarta == 2) {return game.at(5,1)}
+		else {return game.at(8,1)}
 	}
 	
 	method posicionEnJuego(){
-		if (esDeJugador){return game.at(13,15)}
-		else return game.at(18,15)
+		if (esDeJugador){return game.at(12,10)}
+		else return game.at(16,10)
 	}
 	
 	method modificarEstadoEnMazo(){estaEnMazo = false}
@@ -94,6 +94,7 @@ object jugada{
 	
 	method jugar(cartaJugada) {
 		const cartaMaquina = new Carta(nroCarta = [1,2,3].anyOne(),estaEnMazo = false,esDeJugador = false)
+		game.addVisual(cartaMaquina)
 		cartaJugada.modificarEstadoEnMazo()
 		self.quienGana(cartaJugada,cartaMaquina)
 	}
