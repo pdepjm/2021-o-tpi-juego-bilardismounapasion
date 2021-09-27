@@ -4,11 +4,10 @@ import texto.*
 
 program juego {
 	game.cellSize(40)
-	
-	game.height(30)
-	game.width(50)
-	
+	game.height(20)
+	game.width(30)
 	game.title("Pdep-Jitsu")
+	game.ground("Fondo.png")
 	partida.iniciar()
 	game.start()
 }
