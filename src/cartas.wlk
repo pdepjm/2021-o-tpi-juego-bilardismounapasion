@@ -27,8 +27,8 @@ class Carta{
 		}
 		else {
 			if (nroCarta == 1) {return game.at(20,1)}
-			else if(nroCarta == 2) {return game.at(22,1)}
-			else {return game.at(25,1)}
+			else if(nroCarta == 2) {return game.at(23,1)}
+			else {return game.at(26,1)}
 		}
 		
 	}
