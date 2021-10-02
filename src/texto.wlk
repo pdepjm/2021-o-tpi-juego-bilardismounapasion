@@ -11,7 +11,7 @@ import wollok.game.*
 // Les dejamos algunos ejemplos
 // ¡También se puede combinar con las imágenes!
 
-object texto {
+object textoJugador {
 	
 	method position() = game.at(14,16)
 	
@@ -19,6 +19,22 @@ object texto {
 	
 	method textColor() = paleta.verde()
 	
+}
+
+object textoEmpate{
+	
+	method position() = game.at(14,16)
+	
+	method text() = "EMPATE"
+}
+
+object textoMaquina{
+	
+	method position() = game.at(14,16)
+	
+	method text() = "GANO LA MAQUINA"
+	
+	method textColor() = paleta.rojo()
 }
 
 object paleta {

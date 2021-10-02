@@ -141,14 +141,18 @@ object jugada{
 		const elemM = cartaMaquina.elemento()
 		
 		if(elemJ == "fuego" && elemM == "hielo"){
-			game.addVisual(texto)
+			game.addVisual(textoJugador)
 		}
 		else if(elemJ == "hielo" && elemM == "agua"){
-			game.addVisual(texto)
+			game.addVisual(textoJugador)
 		}
 		else if(elemJ == "agua" && elemM == "fuego"){
-			game.addVisual(texto)
+			game.addVisual(textoJugador)
 		}
+		else if(elemJ == elemM){
+			game.addVisual(textoEmpate)
+		}
+		else game.addVisual(textoMaquina)
 	}
 	
 }
