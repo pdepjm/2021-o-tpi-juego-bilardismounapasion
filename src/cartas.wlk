@@ -53,6 +53,35 @@ class Carta{
 	
 }
 
+class JugadorNuevo {
+	
+	var poder = 100
+	
+	method image() = return "jugadorNuevo.png"
+	method position() = game.at(12,16)
+	
+	method poder(){
+		
+		return poder* 45
+		
+	}
+	
+}
+
+
+class JugadorExperimentado {
+
+	var poder = 8000000
+	
+	method image() = return "jugadorExperimentado.png"
+	method position() = game.at(18,16)
+	method poder(){
+		
+		return poder* 78978
+		
+	}
+	
+}
 
 
 object partida{
@@ -74,6 +103,14 @@ object partida{
 		game.addVisual(carta1)
 		game.addVisual(carta2)
 		game.addVisual(carta3)
+		
+	}
+	
+	method generarJugador(){
+		const jugadorExperimentado = new JugadorExperimentado(poder = 889)
+		const jugadorNuevo = new JugadorNuevo(poder = 5)
+		game.addVisual(jugadorExperimentado)
+		game.addVisual(jugadorNuevo)
 		
 	}
 	
@@ -130,6 +167,10 @@ object mazo{
 
 object jugada{
 	
+	var colorGanador = new Texto (texto = "Gana el Jugador",color = verde)
+	var colorPerdedor = new Texto (texto = "Gana la maquina", color = rojo)
+	var colorEmpate = new Texto ()
+	
 	method jugar(cartaJugador,cartaMaquina) {
 		cartaJugador.modificarEstadoEnMazo()
 		cartaMaquina.modificarEstadoEnMazo()
@@ -141,18 +182,21 @@ object jugada{
 		const elemM = cartaMaquina.elemento()
 		
 		if(elemJ == "fuego" && elemM == "hielo"){
-			game.addVisual(textoJugador)
+			game.addVisual(colorGanador)
 		}
 		else if(elemJ == "hielo" && elemM == "agua"){
-			game.addVisual(textoJugador)
+			game.addVisual(colorGanador)
 		}
 		else if(elemJ == "agua" && elemM == "fuego"){
-			game.addVisual(textoJugador)
+			game.addVisual(colorGanador)
 		}
 		else if(elemJ == elemM){
-			game.addVisual(textoEmpate)
+			game.addVisual(colorEmpate)
 		}
-		else game.addVisual(textoMaquina)
+		else {
+			game.addVisual(colorPerdedor)
+			}
+			}
 	}
 	
-}
+

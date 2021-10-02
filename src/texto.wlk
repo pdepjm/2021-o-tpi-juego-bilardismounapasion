@@ -11,33 +11,36 @@ import wollok.game.*
 // Les dejamos algunos ejemplos
 // ¡También se puede combinar con las imágenes!
 
-object textoJugador {
+class Texto {
 	
+	 const texto = "Empate"
+	 var color = azul
 	method position() = game.at(14,16)
+	method text() = texto
+	method textColor() = paleta.color(color)
 	
-	method text() = "GANO EL JUGADOR"
-	
-	method textColor() = paleta.verde()
 	
 }
 
-object textoEmpate{
-	
-	method position() = game.at(14,16)
-	
-	method text() = "EMPATE"
+object verde{
+	const property verde = "00FF00FF"
 }
 
-object textoMaquina{
-	
-	method position() = game.at(14,16)
-	
-	method text() = "GANO LA MAQUINA"
-	
-	method textColor() = paleta.rojo()
+object rojo{
+	const property rojo = "FF0000FF"
+}
+
+object azul{
+	const property azul = "0000FFFF"
 }
 
 object paleta {
-	method verde() = "00FF00FF"
-	method rojo() = "FF0000FF"
+	
+method color(color){ 
+		return
+		if (color==azul){"0000FFFF"}
+		else if(color==rojo){"FF0000FF"}
+		else if(color==verde){ "00FF00FF"}
+
+}
 }
