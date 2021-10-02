@@ -2,9 +2,7 @@ import wollok.game.*
 
 class Carta{
 	const nroCarta = 1
-	const elemento = if (nroCarta == 1) {"fuego"}
-					 else if(nroCarta == 2) {"agua"}
-					 	else {"hielo"} 
+	const elemento = null
 	const poder = [1,2,3,4,5,6,7,8,9,10].anyOne()
 	var estaEnMazo = true
 	var esDeJugador = true
@@ -22,9 +20,17 @@ class Carta{
 	}
 	
 	method posicionEnMazo(){
-		if (nroCarta == 1) {return game.at(2,1)}
-		else if(nroCarta == 2) {return game.at(5,1)}
-		else {return game.at(8,1)}
+		if(esDeJugador){
+			if (nroCarta == 1) {return game.at(2,1)}
+			else if(nroCarta == 2) {return game.at(5,1)}
+			else {return game.at(8,1)}
+		}
+		else {
+			if (nroCarta == 1) {return game.at(22,1)}
+			else if(nroCarta == 2) {return game.at(25,1)}
+			else {return game.at(28,1)}
+		}
+		
 	}
 	
 	method posicionEnJuego(){
@@ -37,7 +43,10 @@ class Carta{
 	method modificarPropietario(){esDeJugador = false} 
 	
 	method image(){
-		return "carta_" + elemento + ".png"
+		if(esDeJugador){
+			return "carta_" + elemento + ".png"
+		}
+		else return "carta_reverso.png"
 	}
 	
 }
@@ -48,55 +57,72 @@ object partida{
 	
 	method iniciar(){
 		self.generarMazoJugador()
+		self.generarMazoMaquina()
 		self.configurarTeclas()
 		
 	}
 	
 	method generarMazoJugador(){
-		const carta1 = new Carta(nroCarta = 1)
-		const carta2 = new Carta(nroCarta = 2)
-		const carta3 = new Carta(nroCarta = 3)
-		mazoJugador.agregarCarta(carta1)
-		mazoJugador.agregarCarta(carta2)
-		mazoJugador.agregarCarta(carta3)
+		const carta1 = new Carta(nroCarta = 1, elemento = "fuego")
+		const carta2 = new Carta(nroCarta = 2, elemento = "agua")
+		const carta3 = new Carta(nroCarta = 3, elemento = "hielo")
+		mazo.agregarCartaJugador(carta1)
+		mazo.agregarCartaJugador(carta2)
+		mazo.agregarCartaJugador(carta3)
 		game.addVisual(carta1)
 		game.addVisual(carta2)
 		game.addVisual(carta3)
 		
 	}
 	
+	method generarMazoMaquina(){
+		const carta1 = new Carta(nroCarta = 1, elemento = "fuego",esDeJugador = false)
+		const carta2 = new Carta(nroCarta = 2, elemento = "agua",esDeJugador = false)
+		const carta3 = new Carta(nroCarta = 3, elemento = "hielo",esDeJugador = false)
+		mazo.agregarCartaMaquina(carta1)
+		mazo.agregarCartaMaquina(carta2)
+		mazo.agregarCartaMaquina(carta3)
+		game.addVisual(carta1)
+		game.addVisual(carta2)
+		game.addVisual(carta3)
+	}
+	
 	method configurarTeclas(){
-		keyboard.p().onPressDo( {mazoJugador.decirPoderes()} )
-		keyboard.a().onPressDo( {mazoJugador.jugarCarta(0)} )
-		keyboard.s().onPressDo( {mazoJugador.jugarCarta(1)} )
-		keyboard.d().onPressDo( {mazoJugador.jugarCarta(2)} )
+		keyboard.p().onPressDo( {mazo.decirPoderes()} )
+		keyboard.a().onPressDo( {mazo.jugarCarta(0)} )
+		keyboard.s().onPressDo( {mazo.jugarCarta(1)} )
+		keyboard.d().onPressDo( {mazo.jugarCarta(2)} )
 	}
 }
 
-object mazoJugador{
-	var cartas=[]
+object mazo{
+	var cartasJugador=[]
+	var cartasMaquina=[]
 	
-	method agregarCarta(carta){
-		cartas.add(carta)
+	method agregarCartaJugador(carta){
+		cartasJugador.add(carta)
+	}
+	
+	method agregarCartaMaquina(carta){
+		cartasMaquina.add(carta)
 	}
 	
 	method decirPoderes(){
-		cartas.forEach( {unaCarta => unaCarta.decirPoder()} )
+		cartasJugador.forEach( {unaCarta => unaCarta.decirPoder()} )
 	}
 	
 	method jugarCarta(indice){
-		jugada.jugar(cartas.get(indice))
+		jugada.jugar(cartasJugador.get(indice),cartasMaquina.anyOne())
 	}
 	
 }
 
 object jugada{
 	
-	method jugar(cartaJugada) {
-		const cartaMaquina = new Carta(nroCarta = [1,2,3].anyOne(),estaEnMazo = false,esDeJugador = false)
-		game.addVisual(cartaMaquina)
-		cartaJugada.modificarEstadoEnMazo()
-		self.quienGana(cartaJugada,cartaMaquina)
+	method jugar(cartaJugador,cartaMaquina) {
+		cartaJugador.modificarEstadoEnMazo()
+		cartaMaquina.modificarEstadoEnMazo()
+		self.quienGana(cartaJugador,cartaMaquina)
 	}
 	
 	method quienGana(cartaJugador,cartaMaquina){
