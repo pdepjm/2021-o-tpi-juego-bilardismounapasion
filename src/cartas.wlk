@@ -93,8 +93,9 @@ object partida{
 		keyboard.a().onPressDo( {mazo.jugarCarta(0)} )
 		keyboard.s().onPressDo( {mazo.jugarCarta(1)} )
 		keyboard.d().onPressDo( {mazo.jugarCarta(2)} )
-		keyboard.r().onPressDo( {game.stop()
-								 game.start()
+		keyboard.r().onPressDo( {game.clear()
+								 mazo.vaciar()
+								 self.iniciar()
 		} )
 	}
 }
@@ -117,6 +118,11 @@ object mazo{
 	
 	method jugarCarta(indice){
 		jugada.jugar(cartasJugador.get(indice),cartasMaquina.anyOne())
+	}
+	
+	method vaciar(){
+		cartasJugador=[]
+		cartasMaquina=[]
 	}
 	
 }
