@@ -93,8 +93,8 @@ object partida{
 		keyboard.a().onPressDo( {mazo.jugarCarta(0)} )
 		keyboard.s().onPressDo( {mazo.jugarCarta(1)} )
 		keyboard.d().onPressDo( {mazo.jugarCarta(2)} )
-		keyboard.r().onPressDo( {game.clear()
-								 self.iniciar()
+		keyboard.r().onPressDo( {game.stop()
+								 game.start()
 		} )
 	}
 }
