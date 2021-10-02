@@ -13,9 +13,9 @@ import wollok.game.*
 
 object texto {
 	
-	method position() = game.at(2, 4)
+	method position() = game.at(14,16)
 	
-	method text() = "¡Pepita!"
+	method text() = "GANO EL JUGADOR"
 	
 	method textColor() = paleta.verde()
 	

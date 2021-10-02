@@ -1,4 +1,5 @@
 import wollok.game.*
+import texto.*
 
 class Carta{
 	const nroCarta = 1
@@ -136,7 +137,18 @@ object jugada{
 	}
 	
 	method quienGana(cartaJugador,cartaMaquina){
+		const elemJ = cartaJugador.elemento()
+		const elemM = cartaMaquina.elemento()
 		
+		if(elemJ == "fuego" && elemM == "hielo"){
+			game.addVisual(texto)
+		}
+		else if(elemJ == "hielo" && elemM == "agua"){
+			game.addVisual(texto)
+		}
+		else if(elemJ == "agua" && elemM == "fuego"){
+			game.addVisual(texto)
+		}
 	}
 	
 }
