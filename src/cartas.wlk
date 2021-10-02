@@ -58,7 +58,7 @@ class JugadorNuevo {
 	var poder = 100
 	
 	method image() = return "jugadorNuevo.png"
-	method position() = game.at(12,16)
+	method position() = game.at(2,11)
 	
 	method poder(){
 		
@@ -74,7 +74,7 @@ class JugadorExperimentado {
 	var poder = 8000000
 	
 	method image() = return "jugadorExperimentado.png"
-	method position() = game.at(18,16)
+	method position() = game.at(19,11)
 	method poder(){
 		
 		return poder* 78978
@@ -90,7 +90,7 @@ object partida{
 		self.generarMazoJugador()
 		self.generarMazoMaquina()
 		self.configurarTeclas()
-		
+		self.generarJugador()
 	}
 	
 	method generarMazoJugador(){
