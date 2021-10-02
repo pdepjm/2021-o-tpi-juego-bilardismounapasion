@@ -26,9 +26,9 @@ class Carta{
 			else {return game.at(8,1)}
 		}
 		else {
-			if (nroCarta == 1) {return game.at(22,1)}
-			else if(nroCarta == 2) {return game.at(25,1)}
-			else {return game.at(28,1)}
+			if (nroCarta == 1) {return game.at(20,1)}
+			else if(nroCarta == 2) {return game.at(22,1)}
+			else {return game.at(25,1)}
 		}
 		
 	}
@@ -46,7 +46,8 @@ class Carta{
 		if(esDeJugador){
 			return "carta_" + elemento + ".png"
 		}
-		else return "carta_reverso.png"
+		else if(estaEnMazo){return "carta_reverso.png"}
+		else return "carta_" + elemento + ".png"
 	}
 	
 }
