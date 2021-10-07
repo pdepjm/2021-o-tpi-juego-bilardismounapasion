@@ -54,63 +54,86 @@ class Carta{
 }
 
 class JugadorNuevo {
+	var cartas = []
+	const poder = 100
 	
-	var poder = 100
+	method image() = "perroChiquito.png"
 	
-	method image() = return "jugadorNuevo.png"
 	method position() = game.at(2,11)
 	
+	method agregarCarta(carta){
+		cartas.add(carta)
+	}
+	
 	method poder(){
-		
 		return poder* 45
-		
+	}
+	
+	method vaciar(){
+		cartas = []
+	}
+	
+	method decirPoderes(){
+		cartas.forEach( {unaCarta => unaCarta.decirPoder()} )
+	}
+	
+	method jugarCarta(indice){
+		partida.jugar(cartas.get(indice))
 	}
 	
 }
 
 
 class JugadorExperimentado {
-
-	var poder = 8000000
+	var cartas = []
+	const poder = 150
 	
-	method image() = return "jugadorExperimentado.png"
+	method image() = "perroGrande.png"
+	
 	method position() = game.at(19,11)
+	
 	method poder(){
-		
 		return poder* 78978
-		
 	}
+	
+	method agregarCarta(carta){
+		cartas.add(carta)
+	}
+	
+	method vaciar(){
+		cartas = []
+	}
+	
+	method cartas() = cartas
 	
 }
 
 
 object partida{
+	const textoGanador = new Texto (texto = "Gana el Jugador",color = "verde")
+	const textoPerdedor = new Texto (texto = "Gana la maquina", color = "rojo")
+	const textoEmpate = new Texto ()
+	
+	const maquina = new JugadorExperimentado()
+	const jugador = new JugadorNuevo()
 	
 	method iniciar(){
+		self.mostrarJugadores()
 		self.generarMazoJugador()
 		self.generarMazoMaquina()
 		self.configurarTeclas()
-		self.generarJugador()
 	}
 	
 	method generarMazoJugador(){
 		const carta1 = new Carta(nroCarta = 1, elemento = "fuego")
 		const carta2 = new Carta(nroCarta = 2, elemento = "agua")
 		const carta3 = new Carta(nroCarta = 3, elemento = "hielo")
-		mazo.agregarCartaJugador(carta1)
-		mazo.agregarCartaJugador(carta2)
-		mazo.agregarCartaJugador(carta3)
+		jugador.agregarCarta(carta1)
+		jugador.agregarCarta(carta2)
+		jugador.agregarCarta(carta3)
 		game.addVisual(carta1)
 		game.addVisual(carta2)
 		game.addVisual(carta3)
-		
-	}
-	
-	method generarJugador(){
-		const jugadorExperimentado = new JugadorExperimentado(poder = 889)
-		const jugadorNuevo = new JugadorNuevo(poder = 5)
-		game.addVisual(jugadorExperimentado)
-		game.addVisual(jugadorNuevo)
 		
 	}
 	
@@ -118,60 +141,36 @@ object partida{
 		const carta1 = new Carta(nroCarta = 1, elemento = "fuego",esDeJugador = false)
 		const carta2 = new Carta(nroCarta = 2, elemento = "agua",esDeJugador = false)
 		const carta3 = new Carta(nroCarta = 3, elemento = "hielo",esDeJugador = false)
-		mazo.agregarCartaMaquina(carta1)
-		mazo.agregarCartaMaquina(carta2)
-		mazo.agregarCartaMaquina(carta3)
+		maquina.agregarCarta(carta1)
+		maquina.agregarCarta(carta2)
+		maquina.agregarCarta(carta3)
 		game.addVisual(carta1)
 		game.addVisual(carta2)
 		game.addVisual(carta3)
 	}
 	
 	method configurarTeclas(){
-		keyboard.p().onPressDo( {mazo.decirPoderes()} )
-		keyboard.a().onPressDo( {mazo.jugarCarta(0)} )
-		keyboard.s().onPressDo( {mazo.jugarCarta(1)} )
-		keyboard.d().onPressDo( {mazo.jugarCarta(2)} )
-		keyboard.r().onPressDo( {game.clear()
-								 mazo.vaciar()
-								 self.iniciar()
-		} )
-	}
-}
-
-object mazo{
-	var cartasJugador=[]
-	var cartasMaquina=[]
-	
-	method agregarCartaJugador(carta){
-		cartasJugador.add(carta)
+		keyboard.p().onPressDo( {jugador.decirPoderes()} )
+		keyboard.a().onPressDo( {jugador.jugarCarta(0)} )
+		keyboard.s().onPressDo( {jugador.jugarCarta(1)} )
+		keyboard.d().onPressDo( {jugador.jugarCarta(2)} )
+		keyboard.r().onPressDo( {self.reiniciar()} )
 	}
 	
-	method agregarCartaMaquina(carta){
-		cartasMaquina.add(carta)
+	method reiniciar(){
+		game.clear()
+		jugador.vaciar()
+		maquina.vaciar()
+		self.iniciar()
 	}
 	
-	method decirPoderes(){
-		cartasJugador.forEach( {unaCarta => unaCarta.decirPoder()} )
+	method mostrarJugadores(){
+		game.addVisual(jugador)
+		game.addVisual(maquina)
 	}
 	
-	method jugarCarta(indice){
-		jugada.jugar(cartasJugador.get(indice),cartasMaquina.anyOne())
-	}
-	
-	method vaciar(){
-		cartasJugador=[]
-		cartasMaquina=[]
-	}
-	
-}
-
-object jugada{
-	
-	var colorGanador = new Texto (texto = "Gana el Jugador",color = verde)
-	var colorPerdedor = new Texto (texto = "Gana la maquina", color = rojo)
-	var colorEmpate = new Texto ()
-	
-	method jugar(cartaJugador,cartaMaquina) {
+	method jugar(cartaJugador) {
+		const cartaMaquina = maquina.cartas().anyOne()
 		cartaJugador.modificarEstadoEnMazo()
 		cartaMaquina.modificarEstadoEnMazo()
 		self.quienGana(cartaJugador,cartaMaquina)
@@ -182,21 +181,22 @@ object jugada{
 		const elemM = cartaMaquina.elemento()
 		
 		if(elemJ == "fuego" && elemM == "hielo"){
-			game.addVisual(colorGanador)
+			game.addVisual(textoGanador)
 		}
 		else if(elemJ == "hielo" && elemM == "agua"){
-			game.addVisual(colorGanador)
+			game.addVisual(textoGanador)
 		}
 		else if(elemJ == "agua" && elemM == "fuego"){
-			game.addVisual(colorGanador)
+			game.addVisual(textoGanador)
 		}
 		else if(elemJ == elemM){
-			game.addVisual(colorEmpate)
+			game.addVisual(textoEmpate)
 		}
 		else {
-			game.addVisual(colorPerdedor)
+			game.addVisual(textoPerdedor)
 			}
-			}
-	}
+		}
+}
+
 	
 

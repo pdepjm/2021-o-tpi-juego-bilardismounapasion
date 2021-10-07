@@ -13,34 +13,21 @@ import wollok.game.*
 
 class Texto {
 	
-	 const texto = "Empate"
-	 var color = azul
+	const texto = "EMPATE"
+	var color = "azul"
+	
 	method position() = game.at(14,16)
 	method text() = texto
 	method textColor() = paleta.color(color)
-	
-	
 }
 
-object verde{
-	const property verde = "00FF00FF"
-}
-
-object rojo{
-	const property rojo = "FF0000FF"
-}
-
-object azul{
-	const property azul = "0000FFFF"
-}
 
 object paleta {
 	
-method color(color){ 
-		return
-		if (color==azul){"0000FFFF"}
-		else if(color==rojo){"FF0000FF"}
-		else if(color==verde){ "00FF00FF"}
-
-}
+	method color(color){ 
+		if (color=="azul"){return "0000FFFF"}
+		else if(color=="rojo"){return "FF0000FF"}
+		else if(color=="verde"){return "00FF00FF"}
+		else throw new DomainException(message = "Ese color no esta definido")
+	}
 }
