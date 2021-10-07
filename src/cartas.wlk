@@ -57,7 +57,7 @@ class JugadorNuevo {
 	var cartas = []
 	const poder = 100
 	
-	method image() = "perroChiquito.png"
+	method image() = "PerroChiquito.png"
 	
 	method position() = game.at(2,11)
 	
@@ -88,7 +88,7 @@ class JugadorExperimentado {
 	var cartas = []
 	const poder = 150
 	
-	method image() = "perroGrande.png"
+	method image() = "PerroGrande.png"
 	
 	method position() = game.at(19,11)
 	
