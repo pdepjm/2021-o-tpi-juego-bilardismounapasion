@@ -35,8 +35,8 @@ class Carta{
 	}
 	
 	method posicionEnJuego(){
-		if (esDeJugador){return game.at(12,10)}
-		else return game.at(16,10)
+		if (esDeJugador){return game.at(12,12)}
+		else return game.at(16,12)
 	}
 	
 	method modificarEstadoEnMazo(){estaEnMazo = false}
@@ -59,7 +59,7 @@ class JugadorNuevo {
 	
 	method image() = "PerroChiquito.png"
 	
-	method position() = game.at(2,11)
+	method position() = game.at(4,8)
 	
 	method agregarCarta(carta){
 		cartas.add(carta)
@@ -90,7 +90,7 @@ class JugadorExperimentado {
 	
 	method image() = "PerroGrande.png"
 	
-	method position() = game.at(19,11)
+	method position() = game.at(22,8)
 	
 	method poder(){
 		return poder* 78978
