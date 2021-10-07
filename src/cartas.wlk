@@ -10,6 +10,8 @@ class Carta{
 	
 	method elemento() = elemento
 	
+	method poder() = poder
+	
 	method decirPoder(){
 		game.say(self, "Poder: " + poder.toString())
 	}
@@ -55,7 +57,7 @@ class Carta{
 
 class JugadorNuevo {
 	var cartas = []
-	const poder = 100
+	const poderBase = 100
 	
 	method image() = "PerroChiquito.png"
 	
@@ -65,8 +67,16 @@ class JugadorNuevo {
 		cartas.add(carta)
 	}
 	
-	method poder(){
-		return poder* 45
+	method decirPoderTotal(){
+		 game.say(self,"Mi poder total es: " + self.poderTotal().toString()) 
+	}
+	
+	method poderTotal(){
+		return poderBase + self.poderCartas()
+	}
+	
+	method poderCartas(){
+		return cartas.map({carta => carta.poder()}).sum()
 	}
 	
 	method vaciar(){
@@ -86,18 +96,26 @@ class JugadorNuevo {
 
 class JugadorExperimentado {
 	var cartas = []
-	const poder = 150
+	const poderBase = 75
 	
 	method image() = "PerroGrande.png"
 	
 	method position() = game.at(21,7)
 	
-	method poder(){
-		return poder* 78978
-	}
-	
 	method agregarCarta(carta){
 		cartas.add(carta)
+	}
+	
+	method decirPoderTotal(){
+		 game.say(self,"El mio es: " + self.poderTotal().toString() + ", " + partida.resultado()) 
+	}
+	
+	method poderTotal(){
+		return poderBase * self.poderCartas()
+	}
+	
+	method poderCartas(){
+		return cartas.map({carta => carta.poder()}).sum()
 	}
 	
 	method vaciar(){
@@ -112,10 +130,11 @@ class JugadorExperimentado {
 object partida{
 	const textoGanador = new Texto (texto = "GANA EL JUGADOR",color = "verde")
 	const textoPerdedor = new Texto (texto = "GANA LA MAQUINA", color = "rojo")
-	const textoEmpate = new Texto ()
+	const textoDesempate = new Texto ()
 	
 	const maquina = new JugadorExperimentado()
 	const jugador = new JugadorNuevo()
+	const participantes = [jugador,maquina]
 	
 	method iniciar(){
 		self.mostrarJugadores()
@@ -190,12 +209,23 @@ object partida{
 			game.addVisual(textoGanador)
 		}
 		else if(elemJ == elemM){
-			game.addVisual(textoEmpate)
+			game.addVisual(textoDesempate)
+			self.desempatar()
 		}
 		else {
 			game.addVisual(textoPerdedor)
 			}
-		}
+	}
+		
+	method desempatar(){
+		participantes.forEach( {unParticipante => unParticipante.decirPoderTotal()} )
+	}
+	
+	method resultado(){
+		if(jugador.poderTotal() > maquina.poderTotal()) {return "GANASTE"}
+		else if(jugador.poderTotal() < maquina.poderTotal()) {return "PERDISTE"}
+		else return "somos igual de buenos"
+	}
 }
 
 	

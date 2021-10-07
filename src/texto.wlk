@@ -13,7 +13,7 @@ import wollok.game.*
 
 class Texto {
 	
-	const texto = "EMPATE"
+	const texto = "DESEMPATE"
 	var color = "azul"
 	
 	method position() = game.at(14,16)
