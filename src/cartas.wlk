@@ -199,15 +199,10 @@ object partida{
 		const elemJ = cartaJugador.elemento()
 		const elemM = cartaMaquina.elemento()
 		
-		if(elemJ == "fuego" && elemM == "hielo"){
+		if(self.leGana(elemJ,elemM)){
 			game.addVisual(textoGanador)
 		}
-		else if(elemJ == "hielo" && elemM == "agua"){
-			game.addVisual(textoGanador)
-		}
-		else if(elemJ == "agua" && elemM == "fuego"){
-			game.addVisual(textoGanador)
-		}
+
 		else if(elemJ == elemM){
 			game.addVisual(textoDesempate)
 			self.desempatar()
@@ -216,7 +211,15 @@ object partida{
 			game.addVisual(textoPerdedor)
 			}
 	}
-		
+	
+	
+	method leGana(cartaGanadora,cartaPerdedora) {
+		if (cartaGanadora == "fuego" && cartaPerdedora == "hielo"){return true}
+		else if (cartaGanadora == "agua" && cartaPerdedora == "fuego"){return true}
+		else if (cartaGanadora == "hielo" && cartaPerdedora == "agua"){return true}
+		else {return false}
+	}
+	
 	method desempatar(){
 		participantes.forEach( {unParticipante => unParticipante.decirPoderTotal()} )
 	}
