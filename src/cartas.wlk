@@ -59,7 +59,7 @@ class JugadorNuevo {
 	
 	method image() = "PerroChiquito.png"
 	
-	method position() = game.at(4,8)
+	method position() = game.at(4,7)
 	
 	method agregarCarta(carta){
 		cartas.add(carta)
@@ -90,7 +90,7 @@ class JugadorExperimentado {
 	
 	method image() = "PerroGrande.png"
 	
-	method position() = game.at(22,8)
+	method position() = game.at(21,7)
 	
 	method poder(){
 		return poder* 78978
@@ -110,8 +110,8 @@ class JugadorExperimentado {
 
 
 object partida{
-	const textoGanador = new Texto (texto = "Gana el Jugador",color = "verde")
-	const textoPerdedor = new Texto (texto = "Gana la maquina", color = "rojo")
+	const textoGanador = new Texto (texto = "GANA EL JUGADOR",color = "verde")
+	const textoPerdedor = new Texto (texto = "GANA LA MAQUINA", color = "rojo")
 	const textoEmpate = new Texto ()
 	
 	const maquina = new JugadorExperimentado()
