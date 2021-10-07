@@ -67,6 +67,8 @@ class JugadorNuevo {
 		cartas.add(carta)
 	}
 	
+	method cartaAgregada(carta) = cartas.contains(carta)	
+	
 	method decirPoderTotal(){
 		 game.say(self,"Mi poder total es: " + self.poderTotal().toString()) 
 	}
@@ -105,6 +107,8 @@ class JugadorExperimentado {
 	method agregarCarta(carta){
 		cartas.add(carta)
 	}
+	
+	method cartaAgregada(carta) = cartas.contains(carta)	
 	
 	method decirPoderTotal(){
 		 game.say(self,"El mio es: " + self.poderTotal().toString() + ", " + partida.resultado()) 

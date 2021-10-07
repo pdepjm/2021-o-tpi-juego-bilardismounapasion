@@ -1,11 +1,68 @@
 import soundProducer.*
+import cartas.*
 
-describe "Inserte descripción" {
-	method initialize() {
-		soundProducer.provider(soundProviderMock)		
+describe "Testeos del Juego" {
+	//method initialize() {
+	//	soundProducer.provider(soundProviderMock)		
+	//}
+	
+	//test "testX" {
+	//	assert.that(true)
+	//}
+	
+	const carta1 = new Carta(nroCarta = 1, elemento = "fuego", poder = 1 , estaEnMazo = false , esDeJugador = false)
+	const carta2 = new Carta(nroCarta = 2, elemento = "agua", poder = 2 , estaEnMazo = false , esDeJugador = false)
+	const carta3 = new Carta(nroCarta = 3, elemento = "hielo", poder = 3 , estaEnMazo = false , esDeJugador = false)	
+	
+	const primerJugadorNuevo = new JugadorNuevo(cartas = [carta1 , carta2 , carta3] , poderBase = 200)
+	const otroJugadorNuevo = new JugadorNuevo(cartas = [carta3] , poderBase = 300)
+	
+	const primerJugadorExperimentado = new JugadorExperimentado(cartas = [carta2] , poderBase = 50000)
+	const otroJugadorExperimentado = new JugadorExperimentado(cartas = [carta1] , poderBase = 1000)
+	
+	//TESTS DEL JUGADOR NUEVO
+	test "Test del jugador nuevo , agregar carta"{
+		
+		otroJugadorNuevo.agregarCarta(carta1)
+		assert.that(otroJugadorNuevo.cartaAgregada(carta1))
 	}
 	
-	test "testX" {
-		assert.that(true)
-	}	
+	test "Test del jugador nuevo , poder total"{
+		
+		assert.equals(206 , primerJugadorNuevo.poderTotal())
+	}
+	
+	test "Test del jugador nuevo , poder de las cartas"{
+		
+		assert.equals(6 , primerJugadorNuevo.poderCartas())
+	}
+	
+	//TESTS DEL JUGADOR EXPERIMENTADO
+	test "Test del jugador experimentado , agregar carta"{
+		
+		otroJugadorExperimentado.agregarCarta(carta1)
+		assert.that(otroJugadorExperimentado.cartaAgregada(carta1))
+		
+	}
+	
+	test "Test del jugador experimentado , poder total"{
+		
+		assert.equals(100000 , primerJugadorExperimentado.poderTotal())
+	}
+	
+	test "Test del jugador experimentado , poder de las cartas"{
+		
+		assert.equals( 2 , primerJugadorExperimentado.poderCartas())
+	}
+	
+	//TESTS PARA SABER SI GANA
+	test "Quien gana , le gana"{
+		
+		assert.that(partida.leGana(carta2 , carta1))
+	}
+	
+	
+	
+	
+		
 }
