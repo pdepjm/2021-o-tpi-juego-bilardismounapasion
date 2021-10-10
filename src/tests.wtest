@@ -1,5 +1,8 @@
+/*
 import soundProducer.*
 import cartas.*
+import jugadores.*
+import partida.*
 
 describe "Testeos del Juego" {
 	//method initialize() {
@@ -65,4 +68,4 @@ describe "Testeos del Juego" {
 	
 	
 		
-}
+}*/

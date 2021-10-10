@@ -1,6 +1,7 @@
 import wollok.game.*
 import cartas.*
 import texto.*
+import partida.*
 
 program juego {
 	game.cellSize(40)
