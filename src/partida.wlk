@@ -10,8 +10,8 @@ object partida {
 	
 	const textoReinicio = new Texto(texto = "PRESIONA R PARA VOLVER A JUGAR", color = "rojo")
 	
-	const maquina = new Jugador(imagen = "PerroGrande.png", posicion = game.at(21, 7), poderBase = 75)
-	const jugador = new Jugador(imagen = "PerroChiquito.png", posicion = game.at(4, 7), poderBase = 100)
+	const maquina = new JugadorExperimentado(imagen = "PerroGrande.png", posicion = game.at(21, 7), poderBase = 75)
+	const jugador = new JugadorNuevo(imagen = "PerroChiquito.png", posicion = game.at(4, 7), poderBase = 100)
 	const participantes = [ jugador, maquina ]
 
 	method iniciar() {

@@ -4,10 +4,12 @@ import partida.*
 
 class Jugador {
 	var property cartas = []
-	const poderBase
 	const imagen
 	const posicion
+	const poderBase
+	
 	method image() = imagen
+	
 	method position() = posicion
 	
 	method agregarCarta(carta){
@@ -17,15 +19,11 @@ class Jugador {
 	method tieneCarta(carta) = cartas.contains(carta)
 	
 	method poderCartas(){
-		return cartas.map({carta => carta.poder()}).sum()
+		return cartas.sum({carta => carta.poder()})
 	}
 	
-	method poderTotal(){
-		return poderBase + self.poderCartas()
-	}	
-	
-	method decirPoderTotal(){
-		 game.say(self,"Mi poder total es: " + self.poderTotal().toString()) 
+	method decirPoderBase(){
+		game.say(self,"Mi poder base es: " + poderBase.toString())
 	}
 	
 	method descartarse(){
@@ -41,20 +39,8 @@ class Jugador {
 	}
 }
 
-/*
-class JugadorNuevo {
-	var cartas = []
-	const poderBase = 100
-	
-	method image() = "PerroChiquito.png"
-	
-	method position() = game.at(4,7)
-	
-	method agregarCarta(carta){
-		cartas.add(carta)
-	}
-	
-	method cartaAgregada(carta) = cartas.contains(carta)	
+
+class JugadorNuevo inherits Jugador {	
 	
 	method decirPoderTotal(){
 		 game.say(self,"Mi poder total es: " + self.poderTotal().toString()) 
@@ -64,38 +50,10 @@ class JugadorNuevo {
 		return poderBase + self.poderCartas()
 	}
 	
-	method poderCartas(){
-		return cartas.map({carta => carta.poder()}).sum()
-	}
-	
-	method vaciar(){
-		cartas = []
-	}
-	
-	method decirPoderes(){
-		cartas.forEach( {unaCarta => unaCarta.decirPoder()} )
-	}
-	
-	method jugarCarta(indice){
-		partida.jugar(cartas.get(indice))
-	}
-	
 }
 
 
-class JugadorExperimentado {
-	var cartas = []
-	const poderBase = 75
-	
-	method image() = "PerroGrande.png"
-	
-	method position() = game.at(21,7)
-	
-	method agregarCarta(carta){
-		cartas.add(carta)
-	}
-	
-	method cartaAgregada(carta) = cartas.contains(carta)	
+class JugadorExperimentado inherits Jugador{
 	
 	method decirPoderTotal(){
 		 game.say(self,"El mio es: " + self.poderTotal().toString() + ", " + partida.resultado()) 
@@ -104,17 +62,5 @@ class JugadorExperimentado {
 	method poderTotal(){
 		return poderBase * self.poderCartas()
 	}
-	
-	method poderCartas(){
-		return cartas.map({carta => carta.poder()}).sum()
-	}
-	
-	method vaciar(){
-		cartas = []
-	}
-	
-	method cartas() = cartas
-	
-}
 
-*/
+}
