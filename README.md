@@ -30,6 +30,6 @@ En el caso de que ambos saquen una carta con el mismo elemento, el poder total d
 
 ## Respuestas teóricas
 
-[ENUNCIADO] (https://docs.google.com/document/d/18WIn-4vs75gLPpGrZO-O_kmRLVmd9CnnnYzon_aTjzQ/edit#)
+[ENUNCIADO](https://docs.google.com/document/d/18WIn-4vs75gLPpGrZO-O_kmRLVmd9CnnnYzon_aTjzQ/edit#)
 
-[RESPUESTAS] (https://docs.google.com/document/d/19YjMWp3V50xyheGZgzJAI3lDKhGNX5bZFHYHFFHq6-I/edit?usp=sharing)
+[RESPUESTAS](https://docs.google.com/document/d/19YjMWp3V50xyheGZgzJAI3lDKhGNX5bZFHYHFFHq6-I/edit?usp=sharing)
