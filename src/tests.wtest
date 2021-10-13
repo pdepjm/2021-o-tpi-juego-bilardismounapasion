@@ -1,71 +1,85 @@
-/*
 import soundProducer.*
 import cartas.*
 import jugadores.*
 import partida.*
+import wollok.game.*
 
-describe "Testeos del Juego" {
-	//method initialize() {
-	//	soundProducer.provider(soundProviderMock)		
-	//}
+describe "Tests de cartas"{
 	
-	//test "testX" {
-	//	assert.that(true)
-	//}
+	const carta1 = new Carta(nroCarta = 1, elemento = "fuego", poder = 4 , estaEnMazo = true , esDeJugador = true)
+	const carta2 = new Carta(nroCarta = 2, elemento = "agua", poder = 8 , estaEnMazo = false , esDeJugador = true)
 	
-	const carta1 = new Carta(nroCarta = 1, elemento = "fuego", poder = 1 , estaEnMazo = false , esDeJugador = false)
-	const carta2 = new Carta(nroCarta = 2, elemento = "agua", poder = 2 , estaEnMazo = false , esDeJugador = false)
-	const carta3 = new Carta(nroCarta = 3, elemento = "hielo", poder = 3 , estaEnMazo = false , esDeJugador = false)	
+	const carta3 = new Carta(nroCarta = 1, elemento = "fuego", poder = 3 , estaEnMazo = true , esDeJugador = false)
+	const carta4 = new Carta(nroCarta = 2, elemento = "agua", poder = 8 , estaEnMazo = false , esDeJugador = false)
 	
-	const primerJugadorNuevo = new JugadorNuevo(cartas = [carta1 , carta2 , carta3] , poderBase = 200)
-	const otroJugadorNuevo = new JugadorNuevo(cartas = [carta3] , poderBase = 300)
+	test "Imagen de carta que esta en mazo y es de jugador"{
+		assert.equals("carta_fuego.png",carta1.image())
+	}
 	
-	const primerJugadorExperimentado = new JugadorExperimentado(cartas = [carta2] , poderBase = 50000)
-	const otroJugadorExperimentado = new JugadorExperimentado(cartas = [carta1] , poderBase = 1000)
+	test "Imagen de carta que esta en mazo y no es de jugador"{
+		assert.equals("carta_reverso.png",carta3.image())
+	}
 	
-	//TESTS DEL JUGADOR NUEVO
-	test "Test del jugador nuevo , agregar carta"{
-		
+	test "Imagen de carta que no esta en mazo y es de jugador"{
+		assert.equals("carta_agua.png",carta2.image())
+	}
+	
+	test "Imagen de carta que no esta en mazo y no es de jugador"{
+		assert.equals("carta_agua.png",carta4.image())
+	}
+	
+	test "Posicion de carta que esta en mazo y es de jugador"{
+		assert.equals(game.at(2,1) ,carta1.posicionEnMazo())
+	}
+	
+	test "Posicion de carta que esta en mazo y no es de jugador"{
+		assert.equals(game.at(20,1) ,carta3.posicionEnMazo())
+	}
+	
+	test "Posicion de carta que no esta en mazo y es de jugador"{
+		assert.equals(game.at(12,12) ,carta2.posicionEnJuego())
+	}
+	
+	test "Posicion de carta que no esta en mazo y no es de jugador"{
+		assert.equals(game.at(16,12) ,carta4.posicionEnJuego())
+	}
+	
+
+}
+
+describe "Tests de jugadores"{
+	const carta1 = new Carta(nroCarta = 1, elemento = "fuego", poder = 4 , estaEnMazo = true , esDeJugador = true)
+	const carta2 = new Carta(nroCarta = 2, elemento = "agua", poder = 8 , estaEnMazo = true , esDeJugador = true)
+	const carta3 = new Carta(nroCarta = 3, elemento = "hielo", poder = 5 , estaEnMazo = true , esDeJugador = true)
+	
+	const carta4 = new Carta(nroCarta = 1, elemento = "fuego", poder = 3 , estaEnMazo = true , esDeJugador = false)
+	const carta5 = new Carta(nroCarta = 2, elemento = "agua", poder = 8 , estaEnMazo = true , esDeJugador = false)
+	const carta6 = new Carta(nroCarta = 3, elemento = "hielo", poder = 10 , estaEnMazo = true , esDeJugador = false)
+
+	const jugadorNuevo = new JugadorNuevo(cartas = [carta1 , carta2 , carta3] , poderBase = 75,imagen = "PerroChiquito.png", posicion = game.at(4, 7))
+	const otroJugadorNuevo = new JugadorNuevo(cartas = [] , poderBase = 75, imagen = "PerroChiquito.png", posicion = game.at(4, 7))
+	const jugadorExperimentado = new JugadorExperimentado(cartas = [carta4 , carta5 , carta6] , poderBase = 100, imagen = "PerroGrande.png", posicion = game.at(21, 7))
+
+	test "Agregar una carta a un jugador"{
 		otroJugadorNuevo.agregarCarta(carta1)
-		assert.that(otroJugadorNuevo.cartaAgregada(carta1))
+		assert.that(otroJugadorNuevo.tieneCarta(carta1))
 	}
 	
-	test "Test del jugador nuevo , poder total"{
-		
-		assert.equals(206 , primerJugadorNuevo.poderTotal())
+	test "Eliminar todas las cartas de un jugador"{
+		jugadorNuevo.descartarse()
+		assert.equals([],jugadorNuevo.cartas())
 	}
 	
-	test "Test del jugador nuevo , poder de las cartas"{
-		
-		assert.equals(6 , primerJugadorNuevo.poderCartas())
+	test "Poder de cartas que tiene un jugador"{
+		assert.equals(21,jugadorExperimentado.poderCartas())
+	}
+
+	test "Poder total de un jugador nuevo"{
+		assert.equals(92 ,jugadorNuevo.poderTotal())
 	}
 	
-	//TESTS DEL JUGADOR EXPERIMENTADO
-	test "Test del jugador experimentado , agregar carta"{
-		
-		otroJugadorExperimentado.agregarCarta(carta1)
-		assert.that(otroJugadorExperimentado.cartaAgregada(carta1))
-		
+	test "Poder total de un jugador experimentado"{
+		assert.equals(2100 ,jugadorExperimentado.poderTotal())
 	}
-	
-	test "Test del jugador experimentado , poder total"{
-		
-		assert.equals(100000 , primerJugadorExperimentado.poderTotal())
-	}
-	
-	test "Test del jugador experimentado , poder de las cartas"{
-		
-		assert.equals( 2 , primerJugadorExperimentado.poderCartas())
-	}
-	
-	//TESTS PARA SABER SI GANA
-	test "Quien gana , le gana"{
-		
-		assert.that(partida.leGana(carta2 , carta1))
-	}
-	
-	
-	
-	
-		
-}*/
+}
+
