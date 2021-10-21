@@ -16,15 +16,15 @@ object partida {
 
 	method iniciar() {
 		self.mostrarJugadores()
-		self.generarMazo(true)
-		self.generarMazo(false)
+		self.generarMazo(jugador)
+		self.generarMazo(maquina)
 		self.configurarTeclas()
 	}
 
-	method generarMazo(perteneceAJugador) {
+	method generarMazo(participante) {
 		const elementos = [ "hielo", "agua", "fuego" ]
-		var participante
-		if (perteneceAJugador) participante = jugador else participante = maquina
+		var perteneceAJugador
+		if (participante == jugador) perteneceAJugador = true else perteneceAJugador = false
 		
 		[ 1, 2, 3 ].forEach({ nro =>
 			const carta = new Carta(nroCarta = nro, elemento = elementos.get(nro - 1), esDeJugador = perteneceAJugador)
