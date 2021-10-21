@@ -2,6 +2,7 @@ import wollok.game.*
 import jugadores.*
 import cartas.*
 import texto.*
+import elementos.*
 
 object partida {
 	const textoGanador = new Texto(texto = "GANA EL JUGADOR", color = "verde")
@@ -22,7 +23,7 @@ object partida {
 	}
 
 	method generarMazo(participante) {
-		const elementos = [ "hielo", "agua", "fuego" ]
+		const elementos = [ hielo, agua, fuego ]
 		var perteneceAJugador
 		if (participante == jugador) perteneceAJugador = true else perteneceAJugador = false
 		
@@ -66,7 +67,7 @@ object partida {
 		const elemM = cartaMaquina.elemento()
 		var texto
 		
-		if (self.leGana(elemJ, elemM)) {
+		if (elemJ.leGana(elemM)) {
 			texto = textoGanador
 		} else if (elemJ == elemM) {
 			texto = textoDesempate
@@ -79,9 +80,9 @@ object partida {
 		game.schedule(2000, {=> game.addVisual(textoReinicio)})
 	}
 
-	method leGana(cartaGanadora, cartaPerdedora) {
+	/*method leGana(cartaGanadora, cartaPerdedora) {
 		return (cartaGanadora == "fuego" && cartaPerdedora == "hielo") || (cartaGanadora == "agua" && cartaPerdedora == "fuego") || (cartaGanadora == "hielo" && cartaPerdedora == "agua")
-	}
+	}*/
 
 	method desempatar() {
 		participantes.forEach({ unParticipante => unParticipante.decirPoderTotal()})

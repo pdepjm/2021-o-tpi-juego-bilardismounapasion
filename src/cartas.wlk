@@ -32,10 +32,10 @@ class Carta{
 	
 	method image(){
 		if(esDeJugador){
-			return "carta_" + elemento + ".png"
+			return "carta_" + elemento.toString() + ".png"
 		}
 		else if(estaEnMazo){return "carta_reverso.png"}
-		else return "carta_" + elemento + ".png"
+		else return "carta_" + elemento.toString() + ".png"
 	}
 	
 }

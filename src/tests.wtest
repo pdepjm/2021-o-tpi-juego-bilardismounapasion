@@ -3,14 +3,15 @@ import cartas.*
 import jugadores.*
 import partida.*
 import wollok.game.*
+import elementos.*
 
 describe "Tests de cartas"{
 	
-	const carta1 = new Carta(nroCarta = 1, elemento = "fuego", poder = 4 , estaEnMazo = true , esDeJugador = true)
-	const carta2 = new Carta(nroCarta = 2, elemento = "agua", poder = 8 , estaEnMazo = false , esDeJugador = true)
+	const carta1 = new Carta(nroCarta = 1, elemento = fuego, poder = 4 , estaEnMazo = true , esDeJugador = true)
+	const carta2 = new Carta(nroCarta = 2, elemento = agua, poder = 8 , estaEnMazo = false , esDeJugador = true)
 	
-	const carta3 = new Carta(nroCarta = 1, elemento = "fuego", poder = 3 , estaEnMazo = true , esDeJugador = false)
-	const carta4 = new Carta(nroCarta = 2, elemento = "agua", poder = 8 , estaEnMazo = false , esDeJugador = false)
+	const carta3 = new Carta(nroCarta = 1, elemento = fuego, poder = 3 , estaEnMazo = true , esDeJugador = false)
+	const carta4 = new Carta(nroCarta = 2, elemento = agua, poder = 8 , estaEnMazo = false , esDeJugador = false)
 	
 	test "Imagen de carta que esta en mazo y es de jugador"{
 		assert.equals("carta_fuego.png",carta1.image())
@@ -48,13 +49,13 @@ describe "Tests de cartas"{
 }
 
 describe "Tests de jugadores"{
-	const carta1 = new Carta(nroCarta = 1, elemento = "fuego", poder = 4 , estaEnMazo = true , esDeJugador = true)
-	const carta2 = new Carta(nroCarta = 2, elemento = "agua", poder = 8 , estaEnMazo = true , esDeJugador = true)
-	const carta3 = new Carta(nroCarta = 3, elemento = "hielo", poder = 5 , estaEnMazo = true , esDeJugador = true)
+	const carta1 = new Carta(nroCarta = 1, elemento = fuego, poder = 4 , estaEnMazo = true , esDeJugador = true)
+	const carta2 = new Carta(nroCarta = 2, elemento = agua, poder = 8 , estaEnMazo = true , esDeJugador = true)
+	const carta3 = new Carta(nroCarta = 3, elemento = hielo, poder = 5 , estaEnMazo = true , esDeJugador = true)
 	
-	const carta4 = new Carta(nroCarta = 1, elemento = "fuego", poder = 3 , estaEnMazo = true , esDeJugador = false)
-	const carta5 = new Carta(nroCarta = 2, elemento = "agua", poder = 8 , estaEnMazo = true , esDeJugador = false)
-	const carta6 = new Carta(nroCarta = 3, elemento = "hielo", poder = 10 , estaEnMazo = true , esDeJugador = false)
+	const carta4 = new Carta(nroCarta = 1, elemento = fuego, poder = 3 , estaEnMazo = true , esDeJugador = false)
+	const carta5 = new Carta(nroCarta = 2, elemento = agua, poder = 8 , estaEnMazo = true , esDeJugador = false)
+	const carta6 = new Carta(nroCarta = 3, elemento = hielo, poder = 10 , estaEnMazo = true , esDeJugador = false)
 
 	const jugadorNuevo = new JugadorNuevo(cartas = [carta1 , carta2 , carta3] , poderBase = 75,imagen = "PerroChiquito.png", posicion = game.at(4, 7))
 	const otroJugadorNuevo = new JugadorNuevo(cartas = [] , poderBase = 75, imagen = "PerroChiquito.png", posicion = game.at(4, 7))
@@ -86,27 +87,27 @@ describe "Tests de jugadores"{
 describe "Test elementos" {
 	
 	test "Fuego le gana a Hielo"{
-		assert.that(partida.leGana("fuego","hielo"))
+		assert.that(fuego.leGana(hielo))
 	}
 	
 	test "Fuego no le gana a Agua"{
-		assert.notThat(partida.leGana("fuego","agua"))
+		assert.notThat(fuego.leGana(agua))
 	}
 	
 	test "Agua le gana a Fuego"{
-		assert.that(partida.leGana("agua","fuego"))
+		assert.that(agua.leGana(fuego))
 	}
 	
 	test "Agua no le gana a Hielo"{
-		assert.notThat(partida.leGana("agua","hielo"))
+		assert.notThat(agua.leGana(hielo))
 	}
 	
 	test "Hielo le gana a Agua"{
-		assert.that(partida.leGana("hielo","agua"))
+		assert.that(hielo.leGana(agua))
 	}
 	
 	test "Hielo no le gana a Fuego"{
-		assert.notThat(partida.leGana("hielo","fuego"))
+		assert.notThat(hielo.leGana(fuego))
 	}
 }
 
