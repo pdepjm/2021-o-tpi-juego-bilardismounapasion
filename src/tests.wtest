@@ -83,3 +83,30 @@ describe "Tests de jugadores"{
 	}
 }
 
+describe "Test elementos" {
+	
+	test "Fuego le gana a Hielo"{
+		assert.that(partida.leGana("fuego","hielo"))
+	}
+	
+	test "Fuego no le gana a Agua"{
+		assert.notThat(partida.leGana("fuego","agua"))
+	}
+	
+	test "Agua le gana a Fuego"{
+		assert.that(partida.leGana("agua","fuego"))
+	}
+	
+	test "Agua no le gana a Hielo"{
+		assert.notThat(partida.leGana("agua","hielo"))
+	}
+	
+	test "Hielo le gana a Agua"{
+		assert.that(partida.leGana("hielo","agua"))
+	}
+	
+	test "Hielo no le gana a Fuego"{
+		assert.notThat(partida.leGana("hielo","fuego"))
+	}
+}
+
