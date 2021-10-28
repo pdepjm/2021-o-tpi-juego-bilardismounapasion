@@ -49,6 +49,7 @@ describe "Tests de cartas"{
 }
 
 describe "Tests de jugadores"{
+	
 	const carta1 = new Carta(nroCarta = 1, elemento = fuego, poder = 4 , estaEnMazo = true , esDeJugador = true)
 	const carta2 = new Carta(nroCarta = 2, elemento = agua, poder = 8 , estaEnMazo = true , esDeJugador = true)
 	const carta3 = new Carta(nroCarta = 3, elemento = hielo, poder = 5 , estaEnMazo = true , esDeJugador = true)

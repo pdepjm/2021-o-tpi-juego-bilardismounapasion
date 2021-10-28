@@ -1,3 +1,11 @@
+/*class Elemento{
+	const debilidad
+	
+	method leGana(contrincante) = contrincante.esDebilidad(self)
+	
+	method esDebilidad(contrincante) = contrincante == debilidad
+}*/
+
 
 object fuego {
 	const debilidad = agua
