@@ -76,12 +76,12 @@ describe "Tests de jugadores"{
 		assert.equals(21,maquina.poderCartas())
 	}
 
-	test "Poder total de un jugador nuevo"{
+	test "Poder total del jugador"{
 		assert.equals(92 ,jugador.poderTotal())
 	}
 	
-	test "Poder total de un jugador experimentado"{
-		assert.equals(2100 ,jugador.poderTotal())
+	test "Poder total de la maquina"{
+		assert.equals(2100 ,maquina.poderTotal())
 	}
 }
 
