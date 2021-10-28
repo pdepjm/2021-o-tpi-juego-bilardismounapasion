@@ -4,11 +4,14 @@ import partida.*
 
 class Jugador {
 	var property cartas = []
-	const imagen
+	var imagen
 	const posicion
 	const poderBase
+	var modo = base
 	
-	method image() = imagen
+	method image() = modo.imagen(self)
+	
+	method imagen() = imagen
 	
 	method position() = posicion
 	
@@ -19,7 +22,7 @@ class Jugador {
 	method tieneCarta(carta) = cartas.contains(carta)
 	
 	method poderCartas(){
-		return cartas.sum({carta => carta.poder()})
+		return cartas.sum({carta => carta.poderTotal()})
 	}
 	
 	method decirPoderBase(){
@@ -37,10 +40,13 @@ class Jugador {
 	method jugarCarta(indice){
 		partida.jugar(cartas.get(indice))
 	}
+	
+	method modo(_modo){modo = _modo}
 }
 
 
-class JugadorNuevo inherits Jugador {	
+class JugadorManual inherits Jugador {
+	var cantManosGanadas = 0	
 	
 	method decirPoderTotal(){
 		 game.say(self,"Mi poder total es: " + self.poderTotal().toString()) 
@@ -50,10 +56,21 @@ class JugadorNuevo inherits Jugador {
 		return poderBase + self.poderCartas()
 	}
 	
+	method upgradearCartaAlAzar(){
+		const rareza = [rara,legendaria].anyOne()
+		cartas.anyOne().rareza(rareza)
+	}
+	
+	method ganoMano(){
+		cantManosGanadas += 1
+		if (cantManosGanadas == 5){modo = motivado}
+	}
+	
+
 }
 
 
-class JugadorExperimentado inherits Jugador{
+class JugadorMaquina inherits Jugador{
 	
 	method decirPoderTotal(){
 		 game.say(self,"El mio es: " + self.poderTotal().toString() + ", " + partida.resultado()) 
@@ -63,4 +80,14 @@ class JugadorExperimentado inherits Jugador{
 		return poderBase * self.poderCartas()
 	}
 
+}
+
+object base{
+	
+	method imagen(jugador) = jugador.imagen()
+}
+
+object motivado{
+	
+	method imagen(jugador) = "perrito_upgrade.png"
 }

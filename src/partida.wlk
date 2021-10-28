@@ -11,8 +11,8 @@ object partida {
 	
 	const textoReinicio = new Texto(texto = "PRESIONA R PARA VOLVER A JUGAR", color = "rojo")
 	
-	const maquina = new JugadorExperimentado(imagen = "PerroGrande.png", posicion = game.at(21, 7), poderBase = 75)
-	const jugador = new JugadorNuevo(imagen = "PerroChiquito.png", posicion = game.at(4, 7), poderBase = 100)
+	const maquina = new JugadorMaquina(imagen = "PerroGrande.png", posicion = game.at(21, 7), poderBase = 75)
+	const jugador = new JugadorManual(imagen = "PerroChiquito.png", posicion = game.at(4, 7), poderBase = 100)
 	const participantes = [ jugador, maquina ]
 
 	method iniciar() {
@@ -40,6 +40,8 @@ object partida {
 		keyboard.s().onPressDo({ jugador.jugarCarta(1)})
 		keyboard.d().onPressDo({ jugador.jugarCarta(2)})
 		keyboard.r().onPressDo({ self.reiniciar()})
+		keyboard.q().onPressDo({ jugador.upgradearCartaAlAzar()})
+		keyboard.g().onPressDo({ jugador.ganoMano()})
 	}
 
 	method reiniciar() {
@@ -69,6 +71,7 @@ object partida {
 		
 		if (elemJ.leGana(elemM)) {
 			texto = textoGanador
+			jugador.ganoMano()
 		} else if (elemJ == elemM) {
 			texto = textoDesempate
 			self.desempatar()

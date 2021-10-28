@@ -7,11 +7,11 @@ import elementos.*
 
 describe "Tests de cartas"{
 	
-	const carta1 = new Carta(nroCarta = 1, elemento = fuego, poder = 4 , estaEnMazo = true , esDeJugador = true)
-	const carta2 = new Carta(nroCarta = 2, elemento = agua, poder = 8 , estaEnMazo = false , esDeJugador = true)
+	const carta1 = new Carta(nroCarta = 1, elemento = fuego, poderBase = 4 , estaEnMazo = true , esDeJugador = true)
+	const carta2 = new Carta(nroCarta = 2, elemento = agua, poderBase = 8 , estaEnMazo = false , esDeJugador = true)
 	
-	const carta3 = new Carta(nroCarta = 1, elemento = fuego, poder = 3 , estaEnMazo = true , esDeJugador = false)
-	const carta4 = new Carta(nroCarta = 2, elemento = agua, poder = 8 , estaEnMazo = false , esDeJugador = false)
+	const carta3 = new Carta(nroCarta = 1, elemento = fuego, poderBase = 3 , estaEnMazo = true , esDeJugador = false)
+	const carta4 = new Carta(nroCarta = 2, elemento = agua, poderBase = 8 , estaEnMazo = false , esDeJugador = false)
 	
 	test "Imagen de carta que esta en mazo y es de jugador"{
 		assert.equals("carta_fuego.png",carta1.image())
@@ -50,38 +50,38 @@ describe "Tests de cartas"{
 
 describe "Tests de jugadores"{
 	
-	const carta1 = new Carta(nroCarta = 1, elemento = fuego, poder = 4 , estaEnMazo = true , esDeJugador = true)
-	const carta2 = new Carta(nroCarta = 2, elemento = agua, poder = 8 , estaEnMazo = true , esDeJugador = true)
-	const carta3 = new Carta(nroCarta = 3, elemento = hielo, poder = 5 , estaEnMazo = true , esDeJugador = true)
+	const carta1 = new Carta(nroCarta = 1, elemento = fuego, poderBase = 4 , estaEnMazo = true , esDeJugador = true)
+	const carta2 = new Carta(nroCarta = 2, elemento = agua, poderBase = 8 , estaEnMazo = true , esDeJugador = true)
+	const carta3 = new Carta(nroCarta = 3, elemento = hielo, poderBase = 5 , estaEnMazo = true , esDeJugador = true)
 	
-	const carta4 = new Carta(nroCarta = 1, elemento = fuego, poder = 3 , estaEnMazo = true , esDeJugador = false)
-	const carta5 = new Carta(nroCarta = 2, elemento = agua, poder = 8 , estaEnMazo = true , esDeJugador = false)
-	const carta6 = new Carta(nroCarta = 3, elemento = hielo, poder = 10 , estaEnMazo = true , esDeJugador = false)
+	const carta4 = new Carta(nroCarta = 1, elemento = fuego, poderBase = 3 , estaEnMazo = true , esDeJugador = false)
+	const carta5 = new Carta(nroCarta = 2, elemento = agua, poderBase = 8 , estaEnMazo = true , esDeJugador = false)
+	const carta6 = new Carta(nroCarta = 3, elemento = hielo, poderBase = 10 , estaEnMazo = true , esDeJugador = false)
 
-	const jugadorNuevo = new JugadorNuevo(cartas = [carta1 , carta2 , carta3] , poderBase = 75,imagen = "PerroChiquito.png", posicion = game.at(4, 7))
-	const otroJugadorNuevo = new JugadorNuevo(cartas = [] , poderBase = 75, imagen = "PerroChiquito.png", posicion = game.at(4, 7))
-	const jugadorExperimentado = new JugadorExperimentado(cartas = [carta4 , carta5 , carta6] , poderBase = 100, imagen = "PerroGrande.png", posicion = game.at(21, 7))
+	const jugador = new JugadorManual(cartas = [carta1 , carta2 , carta3] , poderBase = 75,imagen = "PerroChiquito.png", posicion = game.at(4, 7))
+	const otroJugador = new JugadorManual(cartas = [] , poderBase = 75, imagen = "PerroChiquito.png", posicion = game.at(4, 7))
+	const maquina = new JugadorMaquina(cartas = [carta4 , carta5 , carta6] , poderBase = 100, imagen = "PerroGrande.png", posicion = game.at(21, 7))
 
 	test "Agregar una carta a un jugador"{
-		otroJugadorNuevo.agregarCarta(carta1)
-		assert.that(otroJugadorNuevo.tieneCarta(carta1))
+		otroJugador.agregarCarta(carta1)
+		assert.that(otroJugador.tieneCarta(carta1))
 	}
 	
 	test "Eliminar todas las cartas de un jugador"{
-		jugadorNuevo.descartarse()
-		assert.equals([],jugadorNuevo.cartas())
+		jugador.descartarse()
+		assert.equals([],jugador.cartas())
 	}
 	
 	test "Poder de cartas que tiene un jugador"{
-		assert.equals(21,jugadorExperimentado.poderCartas())
+		assert.equals(21,maquina.poderCartas())
 	}
 
 	test "Poder total de un jugador nuevo"{
-		assert.equals(92 ,jugadorNuevo.poderTotal())
+		assert.equals(92 ,jugador.poderTotal())
 	}
 	
 	test "Poder total de un jugador experimentado"{
-		assert.equals(2100 ,jugadorExperimentado.poderTotal())
+		assert.equals(2100 ,jugador.poderTotal())
 	}
 }
 
