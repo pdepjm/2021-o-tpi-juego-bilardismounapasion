@@ -11,15 +11,28 @@ object partida {
 	
 	const textoReinicio = new Texto(texto = "PRESIONA R PARA VOLVER A JUGAR", color = "rojo")
 	
-	const maquina = new JugadorMaquina(imagen = "PerroGrande.png", posicion = game.at(21, 7), poderBase = 75)
-	const jugador = new JugadorManual(imagen = "PerroChiquito.png", posicion = game.at(4, 7), poderBase = 100)
+	const maquina = new JugadorMaquina(nombre= "perroGrande",posicion = game.at(21, 7), poderBase = 75)
+	const jugador = new JugadorManual(posicion = game.at(4, 7), poderBase = 100)
 	const participantes = [ jugador, maquina ]
 
+
+	method previa(){
+		self.configurarTeclasSeleccionPJ()
+		seleccionadorDePersonaje.mostrarSeleccion()
+	}
+	
+	method establecerNombreJugador(nombre){
+		jugador.nombre(nombre)
+		self.iniciar()
+	}
+	
+	
+	
 	method iniciar() {
 		self.mostrarJugadores()
 		self.generarMazo(jugador)
 		self.generarMazo(maquina)
-		self.configurarTeclas()
+		self.configurarTeclasJuego()
 	}
 
 	method generarMazo(participante) {
@@ -34,7 +47,7 @@ object partida {
 		})
 	}
 
-	method configurarTeclas() {
+	method configurarTeclasJuego() {
 		keyboard.p().onPressDo({ jugador.decirPoderDeCartas()})
 		keyboard.a().onPressDo({ jugador.jugarCarta(0)})
 		keyboard.s().onPressDo({ jugador.jugarCarta(1)})
@@ -42,6 +55,12 @@ object partida {
 		keyboard.r().onPressDo({ self.reiniciar()})
 		keyboard.q().onPressDo({ jugador.upgradearCartaAlAzar()})
 		keyboard.g().onPressDo({ jugador.ganoMano()})
+	}
+	
+	method configurarTeclasSeleccionPJ(){
+		keyboard.right().onPressDo({ seleccionadorDePersonaje.cambiaPJ()})
+		keyboard.left().onPressDo({ seleccionadorDePersonaje.cambiaPJ()})
+		keyboard.enter().onPressDo({ seleccionadorDePersonaje.personajeElegido()})
 	}
 
 	method reiniciar() {
@@ -101,3 +120,37 @@ object partida {
 
 }
 
+object seleccionadorDePersonaje{
+	const titulo = new Texto(texto = "PDEP-JITSU", color = "verde")
+	const nombrePJ = new Texto(texto = "<-- perrito -->",color = "rojo",x = 14,y=8)
+	var pj = "perrito"
+	var contador = 0
+	var imagen = "perrito_base.png"
+	
+	method mostrarSeleccion(){
+		game.addVisual(titulo)
+		game.addVisual(self)
+		game.addVisual(nombrePJ)
+		
+	}
+	
+	method image() = imagen
+	
+	method position() = game.at(13,10)
+	
+	method cambiaPJ(){
+		contador += 1
+		if(contador.even()){
+			pj = "perrito"
+		}
+		else pj = "Carpincho"
+		
+		imagen = pj + "_base.png"
+		nombrePJ.texto("<-- " + pj + " -->")
+	}
+	
+	method personajeElegido(){
+		game.clear()
+		partida.establecerNombreJugador(pj)
+	}
+}

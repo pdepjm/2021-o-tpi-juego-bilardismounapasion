@@ -4,14 +4,12 @@ import partida.*
 
 class Jugador {
 	var property cartas = []
-	var imagen
 	const posicion
 	const poderBase
 	var modo = base
+	var property nombre = "perrito"
 	
 	method image() = modo.imagen(self)
-	
-	method imagen() = imagen
 	
 	method position() = posicion
 	
@@ -84,10 +82,10 @@ class JugadorMaquina inherits Jugador{
 
 object base{
 	
-	method imagen(jugador) = jugador.imagen()
+	method imagen(jugador) = jugador.nombre() + "_base.png"
 }
 
 object motivado{
 	
-	method imagen(jugador) = "perrito_upgrade.png"
+	method imagen(jugador) = jugador.nombre() + "_upgrade.png"
 }

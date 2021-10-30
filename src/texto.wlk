@@ -13,10 +13,12 @@ import wollok.game.*
 
 class Texto {
 	
-	const texto;
+	var property texto;
 	const color;
+	const x = 14
+	const y = 16
 	
-	method position() = game.at(14,16)
+	method position() = game.at(x,y)
 	method text() = texto
 	method textColor() = paleta.color(color)
 }

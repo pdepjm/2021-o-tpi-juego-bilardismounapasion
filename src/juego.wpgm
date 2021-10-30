@@ -2,6 +2,7 @@ import wollok.game.*
 import cartas.*
 import texto.*
 import partida.*
+import soundProducer.*
 
 program juego {
 	game.cellSize(40)
@@ -9,6 +10,6 @@ program juego {
 	game.width(30)
 	game.title("Pdep-Jitsu")
 	game.boardGround("Fondo.png")
-	partida.iniciar()
+	partida.previa()
 	game.start()
 }
