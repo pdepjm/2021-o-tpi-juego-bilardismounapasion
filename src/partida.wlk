@@ -9,11 +9,14 @@ object partida {
 	const textoPerdedor = new Texto(texto = "GANA LA MAQUINA", color = "rojo")
 	const textoDesempate = new Texto(texto = "DESEMPATE", color = "azul")
 	
-	const textoReinicio = new Texto(texto = "PRESIONA R PARA VOLVER A JUGAR", color = "rojo")
+	const textoReinicio = new Texto(texto = "PRESIONA R PARA SIGUIENTE RONDA", color = "azul")
 	
 	const maquina = new JugadorMaquina(nombre= "perroGrande",posicion = game.at(21, 7), poderBase = 75)
 	const jugador = new JugadorManual(posicion = game.at(4, 7), poderBase = 100)
 	const participantes = [ jugador, maquina ]
+	const rivales = ["perroGrande","Gaucho"]
+	
+	var victoriasJugador = 0
 
 
 	method previa(){
@@ -33,6 +36,7 @@ object partida {
 		self.generarMazo(jugador)
 		self.generarMazo(maquina)
 		self.configurarTeclasJuego()
+		jugador.validarManosGanadas()
 	}
 
 	method generarMazo(participante) {
@@ -112,10 +116,36 @@ object partida {
 
 	method resultado() {
 		if (jugador.poderTotal() > maquina.poderTotal()) {
+			jugador.ganoMano()
 			return "GANASTE"
 		} else if (jugador.poderTotal() < maquina.poderTotal()) {
 			return "PERDISTE"
 		} else return "somos igual de buenos"
+	}
+	
+	method victoriaJugador(){
+		const texto = new Texto(texto= maquina.nombre()+" fue vencido!",color = "verde",x=14,y=11)
+		const texto2 = new Texto(texto="SIGUIENTE RIVAL -->",color = "verde",x=14,y=9)
+		var nombreRival
+		
+		const texto3 = new Texto(texto="FELICITACIONES " + jugador.nombre() + "! VENCISTE A TODOS LOS RIVALES",color = "verde")
+		
+		victoriasJugador += 1
+		if(victoriasJugador < rivales.size()){
+			game.addVisual(texto)
+			game.addVisual(texto2)
+			game.addVisual(textoReinicio)
+			nombreRival = rivales.get(victoriasJugador)
+			maquina.nombre(nombreRival)
+			jugador.cantManosGanadas(0)
+		}
+		else{
+			game.clear()
+			game.addVisual(texto3)
+			jugador.posicion(game.at(13,10))
+			game.addVisual(jugador)
+		}
+		
 	}
 
 }

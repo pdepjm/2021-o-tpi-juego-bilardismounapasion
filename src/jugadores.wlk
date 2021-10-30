@@ -4,7 +4,7 @@ import partida.*
 
 class Jugador {
 	var property cartas = []
-	const posicion
+	var property posicion
 	const poderBase
 	var modo = base
 	var property nombre = "perrito"
@@ -44,7 +44,7 @@ class Jugador {
 
 
 class JugadorManual inherits Jugador {
-	var cantManosGanadas = 0	
+	var property cantManosGanadas = 0	
 	
 	method decirPoderTotal(){
 		 game.say(self,"Mi poder total es: " + self.poderTotal().toString()) 
@@ -61,7 +61,21 @@ class JugadorManual inherits Jugador {
 	
 	method ganoMano(){
 		cantManosGanadas += 1
-		if (cantManosGanadas == 5){modo = motivado}
+	}
+	
+	method validarManosGanadas(){
+		if (cantManosGanadas < 5){
+			modo = base
+		}
+		if (cantManosGanadas == 5){
+			modo = motivado
+		}
+		if (cantManosGanadas >=5){
+			self.upgradearCartaAlAzar()
+		}
+		if (cantManosGanadas == 10){
+			partida.victoriaJugador()
+		}
 	}
 	
 
