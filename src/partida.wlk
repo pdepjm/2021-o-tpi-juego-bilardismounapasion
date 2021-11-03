@@ -46,6 +46,20 @@ object partida {
 		self.generarMazo(maquina)
 		self.configurarTeclasJuego()
 		jugador.validarManosGanadas()
+		maquina.validarManosGanadas()
+		self.mostrarMarcador()
+	}
+
+	method mostrarMarcador(){
+		const puntajeJ = new Texto(texto= jugador.cantManosGanadas().toString(),color = "verde",x=2,y=17)
+		const puntajeJugador = new Texto(texto = "PUNTAJE JUGADOR: " ,color = "verde",x=2,y=18)
+		const puntajeM = new Texto(texto= maquina.cantManosGanadasMaquina().toString(),color = "rojo",x=24,y=17)
+		const puntajeMaquina = new Texto(texto = "PUNTAJE MAQUINA: " ,color = "rojo",x=24,y=18)
+		
+		game.addVisual(puntajeJugador)
+		game.addVisual(puntajeJ)
+		game.addVisual(puntajeMaquina)
+		game.addVisual(puntajeM)
 	}
 
 	method generarMazo(participante) {
@@ -65,10 +79,10 @@ object partida {
 		keyboard.a().onPressDo({ jugador.jugarCarta(0)})
 		keyboard.s().onPressDo({ jugador.jugarCarta(1)})
 		keyboard.d().onPressDo({ jugador.jugarCarta(2)})
-		keyboard.r().onPressDo({ self.reiniciar()})
 		keyboard.q().onPressDo({ jugador.upgradearCartaAlAzar()})
 		keyboard.g().onPressDo({ jugador.ganoMano()})
 		keyboard.k().onPressDo({ self.kiricocho()})
+		keyboard.r().onPressDo({ self.reiniciar()})
 	}
 	
 	method configurarTeclasSeleccionPJ(){
@@ -116,7 +130,7 @@ object partida {
 			self.desempatar()
 		} else {
 			texto = textoPerdedor
-			jugador.perdioMano()
+			maquina.ganoMano()
 		}
 		game.addVisual(texto)
 		game.schedule(1000, {=> game.removeVisual(texto)})
@@ -136,14 +150,14 @@ object partida {
 			jugador.ganoMano()
 			return "GANASTE"
 		} else if (jugador.poderTotal() < maquina.poderTotal()) {
-			jugador.perdioMano()
+			maquina.ganoMano()
 			return "PERDISTE"
 		} else return "Somos igual de buenos"
 	}
 	
 	method victoriaJugador(){
-		const texto = new Texto(texto= maquina.nombre()+" fue vencido!",color = "verde",x=14,y=11)
-		const texto2 = new Texto(texto="SIGUIENTE RIVAL -->",color = "verde",x=14,y=9)
+		const texto = new Texto(texto= maquina.nombre()+" fue vencido!",color = "verde",x=15,y=16)
+		const texto2 = new Texto(texto="SIGUIENTE RIVAL -->",color = "verde",x=15,y=15)
 		var nombreRival
 		
 		const texto3 = new Texto(texto="FELICITACIONES " + jugador.nombre() + "! VENCISTE A TODOS LOS RIVALES",color = "verde")
@@ -152,10 +166,10 @@ object partida {
 		if(victoriasJugador < rivales.size()){
 			game.addVisual(texto)
 			game.addVisual(texto2)
-			game.addVisual(textoReinicio)
 			nombreRival = rivales.get(victoriasJugador)
 			maquina.nombre(nombreRival)
 			jugador.cantManosGanadas(0)
+			maquina.cantManosGanadasMaquina(0)
 		}
 		else{
 			game.clear()
@@ -164,6 +178,19 @@ object partida {
 			game.addVisual(jugador)
 		}
 		
+	}
+	
+	method victoriaMaquina(){
+		
+		const texto = new Texto(texto="PERDISTE LA  PARTIDA ",color = "rojo",x=16,y=8)
+
+		
+			game.clear()
+			game.addVisual(texto)
+			maquina.posicion(game.at(13,10))
+			game.addVisual(maquina)
+			game.say(maquina,"BUEN INTENTO")
+	
 	}
 
 }

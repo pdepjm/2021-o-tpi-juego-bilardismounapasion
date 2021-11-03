@@ -66,10 +66,6 @@ class JugadorManual inherits Jugador {
 		cantManosGanadas += 1
 	}
 	
-	method perdioMano(){
-		cantManosGanadas = (cantManosGanadas - 1).max(0)
-		
-	}
 	
 	method validarManosGanadas(){
 		if (cantManosGanadas < 3){
@@ -91,12 +87,27 @@ class JugadorManual inherits Jugador {
 
 class JugadorMaquina inherits Jugador{
 	
+	var property cantManosGanadasMaquina = 0
+	
 	method decirPoderTotal(){
 		 game.say(self,"El mio es: " + self.poderTotal().toString() + ", " + partida.resultado()) 
 	}
 	
 	method poderTotal(){
 		return poderBase * self.poderCartaJugada()
+	}
+
+
+
+	method ganoMano(){
+		cantManosGanadasMaquina += 1
+	}
+
+	method validarManosGanadas(){
+		
+		if (cantManosGanadasMaquina == 3){
+			partida.victoriaMaquina()
+		}
 	}
 
 }

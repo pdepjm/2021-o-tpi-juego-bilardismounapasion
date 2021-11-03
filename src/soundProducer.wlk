@@ -44,5 +44,5 @@ object soundMock {
 	
 	method volume(newVolume){}
 	
-	method volume() = 1
+	method volume() = -1
 }
