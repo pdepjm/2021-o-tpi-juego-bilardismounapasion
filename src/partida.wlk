@@ -68,14 +68,21 @@ object partida {
 		keyboard.r().onPressDo({ self.reiniciar()})
 		keyboard.q().onPressDo({ jugador.upgradearCartaAlAzar()})
 		keyboard.g().onPressDo({ jugador.ganoMano()})
+		keyboard.k().onPressDo({ self.kiricocho()})
 	}
 	
 	method configurarTeclasSeleccionPJ(){
-		keyboard.right().onPressDo({ seleccionadorDePersonaje.cambiaPJ()})
-		keyboard.left().onPressDo({ seleccionadorDePersonaje.cambiaPJ()})
+		keyboard.right().onPressDo({ seleccionadorDePersonaje.cambiaPJ(1)})
+		keyboard.left().onPressDo({ seleccionadorDePersonaje.cambiaPJ(-1)})
 		keyboard.enter().onPressDo({ seleccionadorDePersonaje.personajeElegido()})
 	}
-
+	
+	
+	method kiricocho(){
+		game.say(jugador,"Kiricocho")
+		self.victoriaJugador()
+	}
+	
 	method reiniciar() {
 		game.clear()
 		participantes.forEach({participante => participante.descartarse()})
@@ -179,12 +186,15 @@ object seleccionadorDePersonaje{
 	
 	method position() = game.at(13,10)
 	
-	method cambiaPJ(){
-		contador += 1
-		if(contador.even()){
+	method cambiaPJ(numero){
+		contador += numero
+		if(contador == 0){
 			pj = "perrito"
 		}
-		else pj = "Carpincho"
+		else if (contador == 1){
+			pj = "Carpincho"
+		}
+		else pj = "Bilardo"
 		
 		imagen = pj + "_base.png"
 		nombrePJ.texto("<-- " + pj + " -->")
