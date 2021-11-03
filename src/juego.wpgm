@@ -6,7 +6,7 @@ import soundProducer.*
 
 program juego {
 	
-	const sonido = game.sound("sonido.mp3")
+	const musica = game.sound("sonido.mp3")
 
 	game.cellSize(40)
 	game.height(20)
@@ -14,6 +14,6 @@ program juego {
 	game.title("Pdep-Jitsu")
 	game.boardGround("Fondo.png")
 	partida.previa()
-	game.schedule(100, { sonido.play() })
+	game.schedule(100, { musica.play() })
 	game.start()
 }

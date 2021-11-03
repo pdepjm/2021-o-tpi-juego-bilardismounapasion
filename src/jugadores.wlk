@@ -8,6 +8,7 @@ class Jugador {
 	const poderBase
 	var modo = base
 	var property nombre = "perrito"
+	var property cantManosGanadas = 0	
 	
 	method image() = modo.imagen(self)
 	
@@ -43,11 +44,15 @@ class Jugador {
 	method modo(_modo){modo = _modo}
 	
 	method cartaJugada() = cartas.find( {unaCarta => not unaCarta.estaEnMazo() } )
+	
+	method ganoMano(){
+		cantManosGanadas += 1
+	}
 }
 
 
 class JugadorManual inherits Jugador {
-	var property cantManosGanadas = 0	
+
 	
 	method decirPoderTotal(){
 		 game.say(self,"Mi poder total es: " + self.poderTotal().toString()) 
@@ -60,10 +65,6 @@ class JugadorManual inherits Jugador {
 	method upgradearCartaAlAzar(){
 		const rareza = [rara,legendaria].anyOne()
 		cartas.anyOne().rareza(rareza)
-	}
-	
-	method ganoMano(){
-		cantManosGanadas += 1
 	}
 	
 	
@@ -87,8 +88,6 @@ class JugadorManual inherits Jugador {
 
 class JugadorMaquina inherits Jugador{
 	
-	var property cantManosGanadasMaquina = 0
-	
 	method decirPoderTotal(){
 		 game.say(self,"El mio es: " + self.poderTotal().toString() + ", " + partida.resultado()) 
 	}
@@ -97,15 +96,9 @@ class JugadorMaquina inherits Jugador{
 		return poderBase * self.poderCartaJugada()
 	}
 
-
-
-	method ganoMano(){
-		cantManosGanadasMaquina += 1
-	}
-
 	method validarManosGanadas(){
 		
-		if (cantManosGanadasMaquina == 3){
+		if (cantManosGanadas == 3){
 			partida.victoriaMaquina()
 		}
 	}

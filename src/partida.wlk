@@ -28,9 +28,8 @@ object partida {
 	}
 	
 	method configurarSonido(){
-		//sonido.volume(1)
-		//sonido.loop(true)
-		//sonido.play()
+		sonido.volume(1)
+		sonido.play()
 	}
 	
 	method establecerNombreJugador(nombre){
@@ -53,7 +52,7 @@ object partida {
 	method mostrarMarcador(){
 		const puntajeJ = new Texto(texto= jugador.cantManosGanadas().toString(),color = "verde",x=2,y=17)
 		const puntajeJugador = new Texto(texto = "PUNTAJE JUGADOR: " ,color = "verde",x=2,y=18)
-		const puntajeM = new Texto(texto= maquina.cantManosGanadasMaquina().toString(),color = "rojo",x=24,y=17)
+		const puntajeM = new Texto(texto= maquina.cantManosGanadas().toString(),color = "rojo",x=24,y=17)
 		const puntajeMaquina = new Texto(texto = "PUNTAJE MAQUINA: " ,color = "rojo",x=24,y=18)
 		
 		game.addVisual(puntajeJugador)
