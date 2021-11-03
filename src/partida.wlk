@@ -168,7 +168,7 @@ object partida {
 			nombreRival = rivales.get(victoriasJugador)
 			maquina.nombre(nombreRival)
 			jugador.cantManosGanadas(0)
-			maquina.cantManosGanadasMaquina(0)
+			maquina.cantManosGanadas(0)
 		}
 		else{
 			game.clear()
