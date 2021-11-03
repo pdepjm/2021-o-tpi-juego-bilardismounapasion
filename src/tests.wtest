@@ -50,12 +50,12 @@ describe "Tests de cartas"{
 
 describe "Tests de jugadores"{
 	
-	const carta1 = new Carta(nroCarta = 1, elemento = fuego, poderBase = 4 , estaEnMazo = true , esDeJugador = true)
+	const carta1 = new Carta(nroCarta = 1, elemento = fuego, poderBase = 4 , estaEnMazo = false , esDeJugador = true)
 	const carta2 = new Carta(nroCarta = 2, elemento = agua, poderBase = 8 , estaEnMazo = true , esDeJugador = true)
 	const carta3 = new Carta(nroCarta = 3, elemento = hielo, poderBase = 5 , estaEnMazo = true , esDeJugador = true)
 	
 	const carta4 = new Carta(nroCarta = 1, elemento = fuego, poderBase = 3 , estaEnMazo = true , esDeJugador = false)
-	const carta5 = new Carta(nroCarta = 2, elemento = agua, poderBase = 8 , estaEnMazo = true , esDeJugador = false)
+	const carta5 = new Carta(nroCarta = 2, elemento = agua, poderBase = 8 , estaEnMazo = false , esDeJugador = false)
 	const carta6 = new Carta(nroCarta = 3, elemento = hielo, poderBase = 10 , estaEnMazo = true , esDeJugador = false)
 
 	const jugador = new JugadorManual(cartas = [carta1 , carta2 , carta3] , poderBase = 75,nombre = "perrito", posicion = game.at(4, 7))
@@ -71,17 +71,13 @@ describe "Tests de jugadores"{
 		jugador.descartarse()
 		assert.equals([],jugador.cartas())
 	}
-	
-	test "Poder de cartas que tiene un jugador"{
-		assert.equals(21,maquina.poderCartas())
-	}
 
 	test "Poder total del jugador"{
-		assert.equals(92 ,jugador.poderTotal())
+		assert.equals(79 ,jugador.poderTotal())
 	}
 	
 	test "Poder total de la maquina"{
-		assert.equals(2100 ,maquina.poderTotal())
+		assert.equals(800 ,maquina.poderTotal())
 	}
 }
 
