@@ -3,8 +3,10 @@ import jugadores.*
 import cartas.*
 import texto.*
 import elementos.*
+import soundProducer.*
 
 object partida {
+	
 	const textoGanador = new Texto(texto = "GANA EL JUGADOR", color = "verde")
 	const textoPerdedor = new Texto(texto = "GANA LA MAQUINA", color = "rojo")
 	const textoDesempate = new Texto(texto = "DESEMPATE", color = "azul")
@@ -20,8 +22,15 @@ object partida {
 
 
 	method previa(){
+		self.configurarSonido()
 		self.configurarTeclasSeleccionPJ()
 		seleccionadorDePersonaje.mostrarSeleccion()
+	}
+	
+	method configurarSonido(){
+		//sonido.volume(1)
+		//sonido.loop(true)
+		//sonido.play()
 	}
 	
 	method establecerNombreJugador(nombre){
