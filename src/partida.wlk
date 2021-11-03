@@ -131,7 +131,7 @@ object partida {
 		} else if (jugador.poderTotal() < maquina.poderTotal()) {
 			jugador.perdioMano()
 			return "PERDISTE"
-		} else return "somos igual de buenos"
+		} else return "Somos igual de buenos"
 	}
 	
 	method victoriaJugador(){
