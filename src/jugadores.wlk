@@ -37,6 +37,7 @@ class Jugador {
 	
 	method jugarCarta(indice){
 		partida.jugar(cartas.get(indice))
+		game.schedule(600,{partida.reiniciar()})
 	}
 	
 	method modo(_modo){modo = _modo}
@@ -65,22 +66,26 @@ class JugadorManual inherits Jugador {
 		cantManosGanadas += 1
 	}
 	
+	method perdioMano(){
+		cantManosGanadas = (cantManosGanadas - 1).max(0)
+		
+	}
+	
 	method validarManosGanadas(){
-		if (cantManosGanadas < 5){
+		if (cantManosGanadas < 3){
 			modo = base
 		}
-		if (cantManosGanadas == 5){
+		if (cantManosGanadas >= 3){
 			modo = motivado
 		}
-		if (cantManosGanadas >=5){
+		if (cantManosGanadas >=2){
 			self.upgradearCartaAlAzar()
 		}
-		if (cantManosGanadas == 10){
+		if (cantManosGanadas == 3){
 			partida.victoriaJugador()
 		}
 	}
 	
-
 }
 
 

@@ -109,6 +109,7 @@ object partida {
 			self.desempatar()
 		} else {
 			texto = textoPerdedor
+			jugador.perdioMano()
 		}
 		game.addVisual(texto)
 		game.schedule(1000, {=> game.removeVisual(texto)})
@@ -128,6 +129,7 @@ object partida {
 			jugador.ganoMano()
 			return "GANASTE"
 		} else if (jugador.poderTotal() < maquina.poderTotal()) {
+			jugador.perdioMano()
 			return "PERDISTE"
 		} else return "somos igual de buenos"
 	}
