@@ -19,8 +19,8 @@ class Jugador {
 	
 	method tieneCarta(carta) = cartas.contains(carta)
 	
-	method poderCartas(){
-		return cartas.sum({carta => carta.poderTotal()})
+	method poderCartaJugada(){
+		return self.cartaJugada().poderTotal()
 	}
 	
 	method decirPoderBase(){
@@ -40,6 +40,8 @@ class Jugador {
 	}
 	
 	method modo(_modo){modo = _modo}
+	
+	method cartaJugada() = cartas.find( {unaCarta => not unaCarta.estaEnMazo() } )
 }
 
 
@@ -51,7 +53,7 @@ class JugadorManual inherits Jugador {
 	}
 	
 	method poderTotal(){
-		return poderBase + self.poderCartas()
+		return poderBase + self.poderCartaJugada()
 	}
 	
 	method upgradearCartaAlAzar(){
@@ -89,7 +91,7 @@ class JugadorMaquina inherits Jugador{
 	}
 	
 	method poderTotal(){
-		return poderBase * self.poderCartas()
+		return poderBase * self.poderCartaJugada()
 	}
 
 }
