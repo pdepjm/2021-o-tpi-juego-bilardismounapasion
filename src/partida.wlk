@@ -11,7 +11,7 @@ object partida {
 	const textoPerdedor = new Texto(texto = "GANA LA MAQUINA", color = "rojo")
 	const textoDesempate = new Texto(texto = "DESEMPATE", color = "azul")
 	
-	const textoReinicio = new Texto(texto = "PRESIONA R PARA SIGUIENTE RONDA", color = "azul")
+	const textoReinicio = new Texto(texto = "PRESIONA LETRA   R   PARA SIGUIENTE RONDA", color = "azul")
 	
 	const maquina = new JugadorMaquina(nombre= "perroGrande",posicion = game.at(21, 7), poderBase = 75)
 	const jugador = new JugadorManual(posicion = game.at(4, 7), poderBase = 100)
