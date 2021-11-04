@@ -197,6 +197,7 @@ object partida {
 object seleccionadorDePersonaje{
 	const titulo = new Texto(texto = "PDEP-JITSU", color = "verde")
 	const nombrePJ = new Texto(texto = "<-- perrito -->",color = "rojo",x = 14,y=8)
+	const pjs = ["perrito","carpincho","Doctor"]
 	var pj = "perrito"
 	var contador = 0
 	var imagen = "perrito_base.png"
@@ -213,14 +214,16 @@ object seleccionadorDePersonaje{
 	method position() = game.at(13,10)
 	
 	method cambiaPJ(numero){
-		contador += numero
-		if(contador == 0){
+		contador = (contador + numero).max(0).min(2)
+		
+		pj = pjs.get(contador)
+		/*if(contador == 0){
 			pj = "perrito"
 		}
 		else if (contador == 1){
 			pj = "Carpincho"
 		}
-		else pj = "Bilardo"
+		else pj = "Bilardo"*/
 		
 		imagen = pj + "_base.png"
 		nombrePJ.texto("<-- " + pj + " -->")
