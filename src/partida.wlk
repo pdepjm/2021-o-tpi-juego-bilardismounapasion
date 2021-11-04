@@ -11,8 +11,6 @@ object partida {
 	const textoPerdedor = new Texto(texto = "GANA LA MAQUINA", color = "rojo")
 	const textoDesempate = new Texto(texto = "DESEMPATE", color = "azul")
 	
-	const textoReinicio = new Texto(texto = "PRESIONA LETRA   R   PARA SIGUIENTE RONDA", color = "azul")
-	
 	const maquina = new JugadorMaquina(nombre= "perroGrande",posicion = game.at(21, 7), poderBase = 75)
 	const jugador = new JugadorManual(posicion = game.at(4, 7), poderBase = 100)
 	const participantes = [ jugador, maquina ]
@@ -44,16 +42,15 @@ object partida {
 		self.generarMazo(jugador)
 		self.generarMazo(maquina)
 		self.configurarTeclasJuego()
-		jugador.validarManosGanadas()
-		maquina.validarManosGanadas()
+		participantes.forEach( {unParticipante => unParticipante.validarManosGanadas() })
 		self.mostrarMarcador()
 	}
 
 	method mostrarMarcador(){
 		const puntajeJ = new Texto(texto= jugador.cantManosGanadas().toString(),color = "verde",x=2,y=17)
 		const puntajeJugador = new Texto(texto = "PUNTAJE JUGADOR: " ,color = "verde",x=2,y=18)
-		const puntajeM = new Texto(texto= maquina.cantManosGanadas().toString(),color = "rojo",x=24,y=17)
-		const puntajeMaquina = new Texto(texto = "PUNTAJE MAQUINA: " ,color = "rojo",x=24,y=18)
+		const puntajeM = new Texto(texto= maquina.cantManosGanadas().toString(),color = "rojo",x=26,y=17)
+		const puntajeMaquina = new Texto(texto = "PUNTAJE MAQUINA: " ,color = "rojo",x=26,y=18)
 		
 		game.addVisual(puntajeJugador)
 		game.addVisual(puntajeJ)
@@ -132,13 +129,8 @@ object partida {
 			maquina.ganoMano()
 		}
 		game.addVisual(texto)
-		game.schedule(1000, {=> game.removeVisual(texto)})
-		game.schedule(2000, {=> game.addVisual(textoReinicio)})
+		game.schedule(1000,{self.reiniciar()})
 	}
-
-	/*method leGana(cartaGanadora, cartaPerdedora) {
-		return (cartaGanadora == "fuego" && cartaPerdedora == "hielo") || (cartaGanadora == "agua" && cartaPerdedora == "fuego") || (cartaGanadora == "hielo" && cartaPerdedora == "agua")
-	}*/
 
 	method desempatar() {
 		participantes.forEach({ unParticipante => unParticipante.decirPoderTotal()})
@@ -154,41 +146,32 @@ object partida {
 		} else return "Somos igual de buenos"
 	}
 	
-	method victoriaJugador(){
-		const texto = new Texto(texto= maquina.nombre()+" fue vencido!",color = "verde",x=15,y=16)
-		const texto2 = new Texto(texto="SIGUIENTE RIVAL -->",color = "verde",x=15,y=15)
-		var nombreRival
-		
-		const texto3 = new Texto(texto="FELICITACIONES " + jugador.nombre() + "! VENCISTE A TODOS LOS RIVALES",color = "verde")
-		
+	method victoriaJugador(){		
 		victoriasJugador += 1
 		if(victoriasJugador < rivales.size()){
-			game.addVisual(texto)
-			game.addVisual(texto2)
-			nombreRival = rivales.get(victoriasJugador)
-			maquina.nombre(nombreRival)
-			jugador.cantManosGanadas(0)
-			maquina.cantManosGanadas(0)
+			victoria.contraMaquina()
+			self.prepararSiguienteRonda()
 		}
 		else{
-			game.clear()
-			game.addVisual(texto3)
+			victoria.definitiva()
 			jugador.posicion(game.at(13,10))
 			game.addVisual(jugador)
 		}
 		
 	}
 	
+	method prepararSiguienteRonda(){
+		maquina.nombre(rivales.get(victoriasJugador))
+		maquina.cantManosGanadas(0)
+		jugador.cantManosGanadas(0)
+	}
+	
+	
 	method victoriaMaquina(){
-		
-		const texto = new Texto(texto="PERDISTE LA  PARTIDA ",color = "rojo",x=16,y=8)
-
-		
-			game.clear()
-			game.addVisual(texto)
-			maquina.posicion(game.at(13,10))
-			game.addVisual(maquina)
-			game.say(maquina,"BUEN INTENTO")
+		victoria.maquina()
+		maquina.posicion(game.at(12,7))
+		game.addVisual(maquina)
+		game.say(maquina,"BUEN INTENTO")
 	
 	}
 
@@ -224,4 +207,29 @@ object seleccionadorDePersonaje{
 		game.clear()
 		partida.establecerNombreJugador(pj)
 	}
+}
+
+object victoria{
+	const texto1 = new Texto(texto="GANASTE LA RONDA!!",color = "verde",x=14,y=16)
+	const texto2 = new Texto(texto="SIGUIENTE RIVAL -->",color = "verde",x=14,y=15)
+	const texto3 = new Texto(texto="FELICITACIONES! VENCISTE A TODOS LOS RIVALES",color = "verde")
+	const texto4 = new Texto(texto="PERDISTE LA  PARTIDA ",color = "rojo",x=14,y=16)
+	const textoReinicio = new Texto(texto = "PRESIONA LETRA   (R)   PARA SIGUIENTE RONDA", color = "azul",x=14,y=3)
+	
+	method contraMaquina(){
+		game.addVisual(texto1)
+		game.addVisual(texto2)
+		game.addVisual(textoReinicio)
+	}
+	
+	method definitiva(){
+		game.clear()
+		game.addVisual(texto3)
+	}
+	
+	method maquina(){
+		game.clear()
+		game.addVisual(texto4)
+	}
+	
 }

@@ -63,5 +63,5 @@ object legendaria{
 	
 	method imagen(carta) = "cartaLegendaria_" + carta.elemento().toString() + ".png"
 	
-	method poderTotal(carta) = carta.poderBase() * 10000000
+	method poderTotal(carta) = carta.poderBase() * 10000
 }

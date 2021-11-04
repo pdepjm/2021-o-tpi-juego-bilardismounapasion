@@ -51,7 +51,7 @@ describe "Tests de cartas"{
 	
 	
 	test "Poder Total con rareza legendaria"{
-		assert.equals(80000000 , legendaria.poderTotal(carta2))
+		assert.equals(80000 , legendaria.poderTotal(carta2))
 	}
 
 	test "Poder Total con rareza rara"{

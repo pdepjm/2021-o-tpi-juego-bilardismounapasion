@@ -38,7 +38,6 @@ class Jugador {
 	
 	method jugarCarta(indice){
 		partida.jugar(cartas.get(indice))
-		game.schedule(600,{partida.reiniciar()})
 	}
 	
 	method modo(_modo){modo = _modo}
@@ -69,16 +68,16 @@ class JugadorManual inherits Jugador {
 	
 	
 	method validarManosGanadas(){
-		if (cantManosGanadas < 3){
+		if (cantManosGanadas == 0 ){
 			modo = base
 		}
-		if (cantManosGanadas >= 3){
+		if (cantManosGanadas == 5){
 			modo = motivado
 		}
-		if (cantManosGanadas >=2){
+		if (cantManosGanadas >= 5){
 			self.upgradearCartaAlAzar()
 		}
-		if (cantManosGanadas == 3){
+		if (cantManosGanadas == 10){
 			partida.victoriaJugador()
 		}
 	}
@@ -98,7 +97,7 @@ class JugadorMaquina inherits Jugador{
 
 	method validarManosGanadas(){
 		
-		if (cantManosGanadas == 3){
+		if (cantManosGanadas == 10){
 			partida.victoriaMaquina()
 		}
 	}
@@ -114,3 +113,4 @@ object motivado{
 	
 	method imagen(jugador) = jugador.nombre() + "_upgrade.png"
 }
+
