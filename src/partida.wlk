@@ -6,6 +6,7 @@ import elementos.*
 import soundProducer.*
 
 object partida {
+	const musica = soundProducer.sound("sonido.mp3")
 	
 	const agua = new Elemento(nombre="agua")
 	const hielo = new Elemento(nombre="hielo")
@@ -37,8 +38,9 @@ object partida {
 	}
 	
 	method configurarSonido(){
-		sonido.volume(1)
-		sonido.play()
+		game.schedule(100, { musica.play() })
+		musica.shouldLoop(true)
+		musica.volume(0.5)
 	}
 	
 	method establecerNombreJugador(nombre){

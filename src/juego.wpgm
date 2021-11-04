@@ -5,15 +5,11 @@ import partida.*
 import soundProducer.*
 
 program juego {
-	
-	const musica = game.sound("sonido.mp3")
-
 	game.cellSize(40)
 	game.height(20)
 	game.width(30)
 	game.title("Pdep-Jitsu")
 	game.boardGround("Fondo.png")
 	partida.previa()
-	game.schedule(100, { musica.play() })
 	game.start()
 }
