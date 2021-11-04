@@ -20,11 +20,11 @@ object soundProducer {
 
 object soundProviderMock {
 	
-	method sound(audioFile) = soundMock
+	method sound(audioFile) = sonido
 	
 }
 
-object soundMock {
+object sonido {
 	
 	method pause(){}
 	
@@ -44,5 +44,5 @@ object soundMock {
 	
 	method volume(newVolume){}
 	
-	method volume() = 0
+	method volume() = -1
 }

@@ -1,11 +1,170 @@
 import soundProducer.*
+import cartas.*
+import jugadores.*
+import partida.*
+import wollok.game.*
+import elementos.*
 
-describe "Inserte descripción" {
-	method initialize() {
-		soundProducer.provider(soundProviderMock)		
+describe "Tests de cartas"{
+	
+	const agua = new Elemento(nombre="agua")
+	const hielo = new Elemento(nombre="hielo")
+	const fuego = new Elemento(nombre="fuego")
+	
+	const carta1 = new Carta(nroCarta = 1, elemento = fuego, poderBase = 4 , estaEnMazo = true , esDeJugador = true , rareza = comun)
+	const carta2 = new Carta(nroCarta = 2, elemento = agua, poderBase = 8 , estaEnMazo = false , esDeJugador = true , rareza = legendaria)
+	
+	const carta3 = new Carta(nroCarta = 1, elemento = fuego, poderBase = 3 , estaEnMazo = true , esDeJugador = false , rareza = legendaria)
+	const carta4 = new Carta(nroCarta = 2, elemento = agua, poderBase = 8 , estaEnMazo = false , esDeJugador = false , rareza = rara)
+	
+	method initialize(){
+		agua.debilidad(hielo)
+		fuego.debilidad(agua)
+		hielo.debilidad(fuego)
 	}
 	
-	test "testX" {
-		assert.that(true)
+	test "Imagen de carta que esta en mazo y es de jugador"{
+		assert.equals("carta_fuego.png",carta1.image())
+	}
+	
+	test "Imagen de carta que esta en mazo y no es de jugador"{
+		assert.equals("cartaLegendaria_fuego.png",carta3.image())
+	}
+	
+	test "Imagen de carta que no esta en mazo y es de jugador"{
+		assert.equals("cartaLegendaria_agua.png",carta2.image())
+	}
+	
+	test "Imagen de carta que no esta en mazo y no es de jugador"{
+		assert.equals("cartaRara_agua.png",carta4.image())
+	}
+	
+	test "Posicion de carta que esta en mazo y es de jugador"{
+		assert.equals(game.at(2,1) ,carta1.posicionEnMazo())
+	}
+	
+	test "Posicion de carta que esta en mazo y no es de jugador"{
+		assert.equals(game.at(20,1) ,carta3.posicionEnMazo())
+	}
+	
+	test "Posicion de carta que no esta en mazo y es de jugador"{
+		assert.equals(game.at(12,12) ,carta2.posicionEnJuego())
+	}
+	
+	test "Posicion de carta que no esta en mazo y no es de jugador"{
+		assert.equals(game.at(16,12) ,carta4.posicionEnJuego())
+	}
+	
+	test "Poder Total con rareza comun"{
+		assert.equals( 4 , comun.poderTotal(carta1))
+	}
+	
+	
+	test "Poder Total con rareza legendaria"{
+		assert.equals(80000 , legendaria.poderTotal(carta2))
+	}
+
+	test "Poder Total con rareza rara"{
+		assert.equals(116 , rara.poderTotal(carta4))
 	}	
+
+	test "Es de jugador , que sea verdadero"{
+		assert.that(carta2.esDeJugador())
+	}
+
+	test "Es de jugador, que sea falso"{
+		assert.notThat(carta3.esDeJugador())
+	}
 }
+
+describe "Tests de jugadores"{
+	
+	const agua = new Elemento(nombre="agua")
+	const hielo = new Elemento(nombre="hielo")
+	const fuego = new Elemento(nombre="fuego")
+	
+	const carta1 = new Carta(nroCarta = 1, elemento = fuego, poderBase = 4 , estaEnMazo = false , esDeJugador = true)
+	const carta2 = new Carta(nroCarta = 2, elemento = agua, poderBase = 8 , estaEnMazo = true , esDeJugador = true)
+	const carta3 = new Carta(nroCarta = 3, elemento = hielo, poderBase = 5 , estaEnMazo = true , esDeJugador = true)
+	
+	const carta4 = new Carta(nroCarta = 1, elemento = fuego, poderBase = 3 , estaEnMazo = true , esDeJugador = false)
+	const carta5 = new Carta(nroCarta = 2, elemento = agua, poderBase = 8 , estaEnMazo = false , esDeJugador = false)
+	const carta6 = new Carta(nroCarta = 3, elemento = hielo, poderBase = 10 , estaEnMazo = true , esDeJugador = false)
+
+	const jugador = new JugadorManual(cartas = [carta1 , carta2 , carta3] , poderBase = 75,nombre = "perrito", posicion = game.at(4, 7) , modo = motivado)
+	const otroJugador = new JugadorManual(cartas = [] , poderBase = 75, nombre = "perrito", posicion = game.at(4, 7) , modo = base)
+	const maquina = new JugadorMaquina(cartas = [carta4 , carta5 , carta6] , poderBase = 100, nombre = "perroGrande", posicion = game.at(21, 7) , modo = base)
+	
+	method initialize(){
+		agua.debilidad(hielo)
+		fuego.debilidad(agua)
+		hielo.debilidad(fuego)
+	}
+
+	test "Agregar una carta a un jugador"{
+		otroJugador.agregarCarta(carta1)
+		assert.that(otroJugador.tieneCarta(carta1))
+	}
+	
+	test "Eliminar todas las cartas de un jugador"{
+		jugador.descartarse()
+		assert.equals([],jugador.cartas())
+	}
+
+	test "Poder total del jugador"{
+		assert.equals(79 ,jugador.poderTotal())
+	}
+	
+	test "Poder total de la maquina"{
+		assert.equals(800 ,maquina.poderTotal())
+	}
+	
+	test "tiene carta jugador , que sea verdadero"{
+		assert.that(jugador.tieneCarta(carta3))
+	}
+	
+	test "tiene carta maquina , que sea falso"{
+		assert.notThat(maquina.tieneCarta(carta2))
+	}
+	
+	
+	
+}
+
+describe "Test elementos" {
+	
+	const agua = new Elemento(nombre="agua")
+	const hielo = new Elemento(nombre="hielo")
+	const fuego = new Elemento(nombre="fuego")
+	
+	method initialize(){
+		agua.debilidad(hielo)
+		fuego.debilidad(agua)
+		hielo.debilidad(fuego)
+	}
+	
+	test "Fuego le gana a Hielo"{
+		assert.that(fuego.leGana(hielo))
+	}
+	
+	test "Fuego no le gana a Agua"{
+		assert.notThat(fuego.leGana(agua))
+	}
+	
+	test "Agua le gana a Fuego"{
+		assert.that(agua.leGana(fuego))
+	}
+	
+	test "Agua no le gana a Hielo"{
+		assert.notThat(agua.leGana(hielo))
+	}
+	
+	test "Hielo le gana a Agua"{
+		assert.that(hielo.leGana(agua))
+	}
+	
+	test "Hielo no le gana a Fuego"{
+		assert.notThat(hielo.leGana(fuego))
+	}
+}
+

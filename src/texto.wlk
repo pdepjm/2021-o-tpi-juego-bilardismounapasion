@@ -11,17 +11,25 @@ import wollok.game.*
 // Les dejamos algunos ejemplos
 // ¡También se puede combinar con las imágenes!
 
-object texto {
+class Texto {
 	
-	method position() = game.at(2, 4)
+	var property texto;
+	const color;
+	const x = 14
+	const y = 16
 	
-	method text() = "¡Pepita!"
-	
-	method textColor() = paleta.verde()
-	
+	method position() = game.at(x,y)
+	method text() = texto
+	method textColor() = paleta.color(color)
 }
 
+
 object paleta {
-	method verde() = "00FF00FF"
-	method rojo() = "FF0000FF"
+	
+	method color(color){ 
+		if (color=="azul"){return "0000FFFF"}
+		else if(color=="rojo"){return "FF0000FF"}
+		else if(color=="verde"){return "00FF00FF"}
+		else throw new DomainException(message = "Ese color no esta definido")
+	}
 }

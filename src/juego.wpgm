@@ -1,10 +1,15 @@
 import wollok.game.*
-import pepita.*
+import cartas.*
 import texto.*
+import partida.*
+import soundProducer.*
 
 program juego {
-	game.title("Juego Base")
-	game.addVisual(pepita)
-	game.addVisual(texto)
+	game.cellSize(40)
+	game.height(20)
+	game.width(30)
+	game.title("Pdep-Jitsu")
+	game.boardGround("Fondo.png")
+	partida.previa()
 	game.start()
 }
