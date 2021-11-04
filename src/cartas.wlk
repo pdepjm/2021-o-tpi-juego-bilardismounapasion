@@ -46,7 +46,7 @@ object comun{
 	
 	method imagen(carta){
 		if(not carta.esDeJugador() && carta.estaEnMazo()){return "carta_reverso.png"}
-		else return "carta_" + carta.elemento().toString() + ".png"
+		else return "carta_" + carta.elemento().nombre() + ".png"
 	}
 	
 	method poderTotal(carta) = carta.poderBase()
@@ -54,14 +54,14 @@ object comun{
 
 object rara{
 	
-	method imagen(carta) = "cartaRara_" + carta.elemento().toString() + ".png"
+	method imagen(carta) = "cartaRara_" + carta.elemento().nombre() + ".png"
 	
 	method poderTotal(carta) = 2 * carta.poderBase() + 100
 }
 
 object legendaria{
 	
-	method imagen(carta) = "cartaLegendaria_" + carta.elemento().toString() + ".png"
+	method imagen(carta) = "cartaLegendaria_" + carta.elemento().nombre() + ".png"
 	
 	method poderTotal(carta) = carta.poderBase() * 10000
 }

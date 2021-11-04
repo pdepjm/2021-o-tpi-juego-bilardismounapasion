@@ -7,11 +7,21 @@ import elementos.*
 
 describe "Tests de cartas"{
 	
+	const agua = new Elemento(nombre="agua")
+	const hielo = new Elemento(nombre="hielo")
+	const fuego = new Elemento(nombre="fuego")
+	
 	const carta1 = new Carta(nroCarta = 1, elemento = fuego, poderBase = 4 , estaEnMazo = true , esDeJugador = true , rareza = comun)
 	const carta2 = new Carta(nroCarta = 2, elemento = agua, poderBase = 8 , estaEnMazo = false , esDeJugador = true , rareza = legendaria)
 	
 	const carta3 = new Carta(nroCarta = 1, elemento = fuego, poderBase = 3 , estaEnMazo = true , esDeJugador = false , rareza = legendaria)
 	const carta4 = new Carta(nroCarta = 2, elemento = agua, poderBase = 8 , estaEnMazo = false , esDeJugador = false , rareza = rara)
+	
+	method initialize(){
+		agua.debilidad(hielo)
+		fuego.debilidad(agua)
+		hielo.debilidad(fuego)
+	}
 	
 	test "Imagen de carta que esta en mazo y es de jugador"{
 		assert.equals("carta_fuego.png",carta1.image())
@@ -69,6 +79,10 @@ describe "Tests de cartas"{
 
 describe "Tests de jugadores"{
 	
+	const agua = new Elemento(nombre="agua")
+	const hielo = new Elemento(nombre="hielo")
+	const fuego = new Elemento(nombre="fuego")
+	
 	const carta1 = new Carta(nroCarta = 1, elemento = fuego, poderBase = 4 , estaEnMazo = false , esDeJugador = true)
 	const carta2 = new Carta(nroCarta = 2, elemento = agua, poderBase = 8 , estaEnMazo = true , esDeJugador = true)
 	const carta3 = new Carta(nroCarta = 3, elemento = hielo, poderBase = 5 , estaEnMazo = true , esDeJugador = true)
@@ -80,6 +94,12 @@ describe "Tests de jugadores"{
 	const jugador = new JugadorManual(cartas = [carta1 , carta2 , carta3] , poderBase = 75,nombre = "perrito", posicion = game.at(4, 7) , modo = motivado)
 	const otroJugador = new JugadorManual(cartas = [] , poderBase = 75, nombre = "perrito", posicion = game.at(4, 7) , modo = base)
 	const maquina = new JugadorMaquina(cartas = [carta4 , carta5 , carta6] , poderBase = 100, nombre = "perroGrande", posicion = game.at(21, 7) , modo = base)
+	
+	method initialize(){
+		agua.debilidad(hielo)
+		fuego.debilidad(agua)
+		hielo.debilidad(fuego)
+	}
 
 	test "Agregar una carta a un jugador"{
 		otroJugador.agregarCarta(carta1)
@@ -112,6 +132,16 @@ describe "Tests de jugadores"{
 }
 
 describe "Test elementos" {
+	
+	const agua = new Elemento(nombre="agua")
+	const hielo = new Elemento(nombre="hielo")
+	const fuego = new Elemento(nombre="fuego")
+	
+	method initialize(){
+		agua.debilidad(hielo)
+		fuego.debilidad(agua)
+		hielo.debilidad(fuego)
+	}
 	
 	test "Fuego le gana a Hielo"{
 		assert.that(fuego.leGana(hielo))

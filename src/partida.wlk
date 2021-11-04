@@ -7,6 +7,10 @@ import soundProducer.*
 
 object partida {
 	
+	const agua = new Elemento(nombre="agua")
+	const hielo = new Elemento(nombre="hielo")
+	const fuego = new Elemento(nombre="fuego")
+	
 	const textoGanador = new Texto(texto = "GANA EL JUGADOR", color = "verde")
 	const textoPerdedor = new Texto(texto = "GANA LA MAQUINA", color = "rojo")
 	const textoDesempate = new Texto(texto = "DESEMPATE", color = "azul")
@@ -20,9 +24,16 @@ object partida {
 
 
 	method previa(){
+		self.configurarElementos()
 		self.configurarSonido()
 		self.configurarTeclasSeleccionPJ()
 		seleccionadorDePersonaje.mostrarSeleccion()
+	}
+	
+	method configurarElementos(){
+		agua.debilidad(hielo)
+		fuego.debilidad(agua)
+		hielo.debilidad(fuego)
 	}
 	
 	method configurarSonido(){
