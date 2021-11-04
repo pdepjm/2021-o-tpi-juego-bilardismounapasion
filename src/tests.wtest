@@ -62,7 +62,7 @@ describe "Tests de cartas"{
 		assert.that(carta2.esDeJugador())
 	}
 
-	test "Es de jugador, que sea falso"{
+	test "Es de jugador, que sea falso "{
 		assert.notThat(carta3.esDeJugador())
 	}
 }
