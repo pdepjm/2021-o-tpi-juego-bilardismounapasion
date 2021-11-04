@@ -215,16 +215,7 @@ object seleccionadorDePersonaje{
 	
 	method cambiaPJ(numero){
 		contador = (contador + numero).max(0).min(2)
-		
-		pj = pjs.get(contador)
-		/*if(contador == 0){
-			pj = "perrito"
-		}
-		else if (contador == 1){
-			pj = "Carpincho"
-		}
-		else pj = "Bilardo"*/
-		
+		pj = pjs.get(contador)		
 		imagen = pj + "_base.png"
 		nombrePJ.texto("<-- " + pj + " -->")
 	}
